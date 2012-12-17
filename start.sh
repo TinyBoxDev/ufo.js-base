@@ -1,3 +1,3 @@
 #! /bin/bash
 
-NODE_PATH="lib" node web.js
+exec env NODE_PATH="lib" node web.js
