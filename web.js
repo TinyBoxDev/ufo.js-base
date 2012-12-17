@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-require('./lib/Peer').startPeer(server);
+require('peer').startPeer(server);
 
 app.configure(function () {
 	// Show Errors Oppan Java Style
