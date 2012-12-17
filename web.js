@@ -1,12 +1,12 @@
 var express = require('express');
 
 var app = express();
-app.configure(function () {  
-  // Show Errors Oppan Java Style
-  app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-  
-  // Static Files Folder
-  app.use(express.static(__dirname + '/public'));
+app.configure(function () {
+	// Show Errors Oppan Java Style
+	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
+	
+	// Static Files Folder
+	app.use(express.static(__dirname + '/public'));
 });
 
 app.get('/', function(request, response) {
