@@ -1,0 +1,15 @@
+{
+  "name": "P2PWebsharing",
+  "version": "0.0.1",
+  "description": "Peer to peer via http",
+  "authors": [ "Pasquale Boemio <boemianrasodi@gmail.com>", "Antonio Bevilacqua <b3by.in.th3.sky@gmail.com>"],
+  "repository": "https://github.com/TinyBoxDev/p2pwebsharing.git",
+  "dependencies" : {
+    "express" : "*",
+    "should" : "*",
+  },
+  "engines": {
+    "node": "0.8.x",
+    "npm": "1.1.x"
+  }
+}
