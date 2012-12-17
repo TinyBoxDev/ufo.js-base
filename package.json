@@ -6,7 +6,8 @@
   "repository": "https://github.com/TinyBoxDev/p2pwebsharing.git",
   "dependencies" : {
     "express" : "*",
-    "should" : "*"
+    "should" : "*",
+    "socket.io" : "*"
   },
   "engines": {
     "node": "0.8.x",
