@@ -1,3 +1,5 @@
+all:	test testweb
+
 test:
 	./node_modules/.bin/mocha
 	
