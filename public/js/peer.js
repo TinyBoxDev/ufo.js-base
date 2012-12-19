@@ -2,8 +2,9 @@ var Peer = function() {
 	this.channel = null;
 }
 
-//Apple.prototype.getInfo = function() {
-//    return this.color + ' ' + this.type + ' apple';
-//};
+Peer.prototype.connect = function(bootstrapAddress, whenConnected) {
+	this.channel = io.connect(bootstrapAddress);
+	whenConnected();
+}
 
 module.exports.Peer = Peer;
