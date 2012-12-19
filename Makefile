@@ -1,9 +1,9 @@
 all:	test testweb
 
 test:
-	./node_modules/.bin/mocha
+	./node_modules/.bin/mocha test/*
 	
 testweb:
-	phantomjs ./testweb/run-mocha.js ./testweb/testspage.html
+	./node_modules/.bin/mocha ./testweb/*
 
 .PHONY: test testweb
