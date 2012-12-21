@@ -4,7 +4,7 @@
 
 describe('Channel:\n', function(){
 	var thisChannel = null;
-	
+
 	before(function(done){
 		done();
 	});
@@ -19,6 +19,8 @@ describe('Channel:\n', function(){
 	});
 
 	afterEach(function(done){
+		if(thisChannel.wrappedChannel)
+			thisChannel.wrappedChannel.disconnect();
 		done();
 	});
 	
@@ -28,45 +30,44 @@ describe('Channel:\n', function(){
 	});
 	
 	it('Should have a way to connect to a server passing the address', function(done) {
-		var innerTestFunction = function() {
+		var checkChannel = function() {
 			assert(thisChannel.wrappedChannel!=null);
-			done();
+			done();			
 		}
 		thisChannel.should.have.property('connectByName');
-		thisChannel.connectByName('http://p2pwebsharing.herokuapp.com', innerTestFunction);
+		thisChannel.connectByName('http://p2pwebsharing.herokuapp.com', checkChannel);
 	});
 	
+	/* Due a bug into socket.io client, I can't connect twice to the same server!
 	it('Should be able to send messages', function(done) {
-		var onReplyReceived = function(reply) {
-			assert(reply==='cacca');
+		var sendMessage = function() {
+			thisChannel.send('cacca');
 			done();
 		}
-		var innerTestFunction = function() {
-			thisChannel.send('cacca', onReplyReceived);
-		}
 		thisChannel.should.have.property('send');
-		thisChannel.connectByName('http://echotestserver.herokuapp.com', innerTestFunction);
+		thisChannel.connectByName('http://echotestserver.herokuapp.com', sendMessage);
 	});
-	
+	*/
+
 	it('Should throw an exception if user tries to send a message before he connects', function(done) {
 		try {
-			thisChannel.send('cacca', function(reply){});
+			thisChannel.send('cacca');
 		}
 		catch(err) {
 			done();
 		}
 	});
-	
-	it('Should have a peer connection object', function(done) {
-		thisChannel.should.have.property('peerConnection');
-		done();
-	});
 
-	it('Should be able to create offer', function(done) {
-		var onOfferCreated = function(createdOffer) {
-			assert(createdOffer!=null);
+	it('Should be able to add callbacks', function(done){ 
+		var onReplyReceived = function(reply) {
+			assert(reply==='caccabody');
 			done();
 		}
-		thisChannel.getNewOffer(onOfferCreated);
+		var sendMessage = function() {
+			thisChannel.send(new p2pPacket('cacca', 'caccabody'));			
+		}
+		thisChannel.on('cacca', onReplyReceived);
+		thisChannel.connectByName('http://echotestserver.herokuapp.com', sendMessage);
 	});
+	
 });

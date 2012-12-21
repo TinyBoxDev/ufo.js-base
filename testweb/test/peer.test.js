@@ -22,9 +22,15 @@ describe('Peer:\n', function(){
 		done();
 	});
 	
-	it('Should have a channel', function(done) {
+	it('Should have a channel not null', function(done) {
 		thisPeer.should.have.property('channel');
+		assert(thisPeer.channel!=null);
 		done();
 	});
-		
+
+	it('Should have a local and a remote descriptor', function(done) {
+		thisPeer.should.have.property('localDescriptor');
+		thisPeer.should.have.property('remoteDescriptor');
+		done();
+	});
 });

@@ -1,21 +1,24 @@
 var Channel = function() {
 	this.wrappedChannel = null;
-	this.peerConnection = null;
 }
 
-Channel.prototype.connectByName = function(serverAddress, onConnected) {
+Channel.prototype.connectByName = function(serverAddress, onConnect) {
+	var self = this;
 	this.wrappedChannel = io.connect(serverAddress);
-	this.wrappedChannel.on('connect', onConnected);
+	this.wrappedChannel.on('connect', onConnect);
+	this.wrappedChannel.on('reconnect', onConnect);
+	this.wrappedChannel.on('p2pws', function(pkt) { 
+		if(pkt.type && pkt.body)
+			self[pkt.type].call(self, pkt.body);
+	});
 }
 
-Channel.prototype.getNewOffer = function(onOfferCreated) {
-	this.peerConnection = new mozRTCPeerConnection();
-	this.peerConnection.createOffer(onOfferCreated, generalFailureCallback);	
-}
-
-Channel.prototype.send = function(packet, onReplyReceived) {
-	this.wrappedChannel.on('p2pws', onReplyReceived);
+Channel.prototype.send = function(packet) {
 	this.wrappedChannel.emit('p2pws', packet);
+}
+
+Channel.prototype.on = function(eventName, callback) {
+	this[eventName] = callback;
 }
 
 var generalFailureCallback = function(errorMessage) {

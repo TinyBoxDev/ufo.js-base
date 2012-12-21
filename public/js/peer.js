@@ -1,3 +1,6 @@
 var Peer = function() {
-	this.channel = null;
+	this.localDescriptor = null;
+	this.remoteDescriptor = null;
+
+	this.channel = new Channel();
 }
