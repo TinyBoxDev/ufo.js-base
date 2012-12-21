@@ -14,7 +14,7 @@ describe('Peer:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisPeer = new Peer();
+		thisPeer = new Peer('http://p2pwebsocket.herokuapp.com');
 		done();
 	});
 
@@ -28,9 +28,24 @@ describe('Peer:\n', function(){
 		done();
 	});
 
-	it('Should have a local and a remote descriptor', function(done) {
-		thisPeer.should.have.property('localDescriptor');
-		thisPeer.should.have.property('remoteDescriptor');
+	it('Should have a peer connection object', function(done) {
+		thisPeer.should.have.property('peerConnection');
 		done();
+	});
+
+	it('The channel should have a peering reply method', function(done) {
+		thisPeer.channel.should.have.property('peeringReply');
+		done();
+	});
+
+	it('Should send a request to search a new peer', function(done) {
+		var checkPacket = function(reply) {
+			reply.should.have.property('offer');
+			assert(reply.offer!=null);
+			done();
+		}	
+		var newPeer = new Peer('http://echotestserver.herokuapp.com');
+		newPeer.channel.on('peering', checkPacket);
+		newPeer.lookForAPeer();
 	});
 });

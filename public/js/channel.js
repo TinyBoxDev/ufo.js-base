@@ -21,6 +21,4 @@ Channel.prototype.on = function(eventName, callback) {
 	this[eventName] = callback;
 }
 
-var generalFailureCallback = function(errorMessage) {
-	throw errorMessage
-}
+
