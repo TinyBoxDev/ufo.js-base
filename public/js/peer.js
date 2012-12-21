@@ -11,11 +11,12 @@ var Peer = function(bootstrapServerAddress) {
 
 Peer.prototype.lookForAPeer = function() {
 	this.peerConnection = new mozRTCPeerConnection();	
-	var localDescriptor = this.peerConnection.createOffer(onOfferCreated, generalFailureCallback);
+	this.peerConnection.createOffer(onOfferCreated, generalFailureCallback);
 }
 
 var onOfferCreated = function(offer) {
 	var packet = new p2pPacket('peering', new peeringPacket(offer));
+	self.peerConnection.setLocalDescription(offer);
 	self.channel.send(packet);
 }
 
