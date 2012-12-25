@@ -3,8 +3,8 @@
 */
 
 describe('Channel:\n', function(){
+	this.timeout(10000);	
 	var thisChannel = null;
-	var ioscript = null;
 
 	before(function(done){
 		done();
@@ -15,24 +15,28 @@ describe('Channel:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		//if(!document.getElementById('ioscript'))
-		//	document.getElementsByTagName('head')[0].appendChild(ioscript);
+		if(!document.getElementById('ioscript')) {
+			var ioscript = document.createElement('script');
+			ioscript.src = "http://echotestserver.herokuapp.com/socket.io/socket.io.js";
+			ioscript.id = "ioscript"
+			document.getElementsByTagName('head')[0].appendChild(ioscript);
+		}
 		thisChannel = new Channel();
-		//setTimeout(done, 1000);
-		done();
+		setTimeout(done, 1000);
+		//done();
 	});
 
 	afterEach(function(done){
-		//if(thisChannel.wrappedChannel) {
-		//	ioscript = document.getElementById('ioscript');
-		//	ioscript.parentNode.removeChild(ioscript);
-		//	thisChannel.wrappedChannel.disconnect();			
-		//	var poolnode = document.getElementsByTagName('script')[0];
-		//	poolnode.parentNode.removeChild(poolnode);
-		//	var iosocketform = document.getElementsByClassName('socketio')[0];
-		//	if(iosocketform)
-		//		iosocketform.parentNode.removeChild(iosocketform);
-		//}
+		if(thisChannel && thisChannel.wrappedChannel) {
+			thisChannel.wrappedChannel.disconnect();						
+			var ioscript = document.getElementById('ioscript');
+			ioscript.parentNode.removeChild(ioscript);
+			var poolnode = document.getElementsByTagName('script')[0];
+			poolnode.parentNode.removeChild(poolnode);
+			var iosocketform = document.getElementsByClassName('socketio')[0];
+			if(iosocketform)
+				iosocketform.parentNode.removeChild(iosocketform);
+		}
 		done();
 	});
 	
@@ -47,7 +51,7 @@ describe('Channel:\n', function(){
 			done();			
 		}
 		thisChannel.should.have.property('connectByName');
-		thisChannel.connectByName('http://p2pwebsharing.herokuapp.com', checkChannel);
+		thisChannel.connectByName('http://echotestserver.herokuapp.com', checkChannel);
 	});
 	
 	it('Should be able to send messages', function(done) {
