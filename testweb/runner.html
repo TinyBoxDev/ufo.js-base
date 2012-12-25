@@ -6,7 +6,7 @@
     <script src="http://code.jquery.com/jquery-1.8.3.js" type="text/javascript"></script>
     <script src="./lib/mocha.js"></script>
     <script src="./lib/should.browser.js"></script>
-    <script src="http://echotestserver.herokuapp.com/socket.io/socket.io.js"></script>
+    <script id="ioscript" src="http://echotestserver.herokuapp.com/socket.io/socket.io.js"></script>
     <script>mocha.setup('bdd')</script>
     <script>
       function assert(expr, msg) {
@@ -19,6 +19,9 @@
 
     <script src="../public/js/peeringPacket.js"></script>
     <script src="./test/peeringPacket.test.js"></script>
+
+    <script src="../public/js/peeringReplyPacket.js"></script>
+    <script src="./test/peeringReplyPacket.test.js"></script>
 
     <script src="../public/js/channel.js"></script>
     <script src="./test/channel.test.js"></script>

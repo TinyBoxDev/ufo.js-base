@@ -4,6 +4,7 @@
 
 describe('Channel:\n', function(){
 	var thisChannel = null;
+	var ioscript = null;
 
 	before(function(done){
 		done();
@@ -14,13 +15,24 @@ describe('Channel:\n', function(){
 	});
 	
 	beforeEach(function(done){
+		//if(!document.getElementById('ioscript'))
+		//	document.getElementsByTagName('head')[0].appendChild(ioscript);
 		thisChannel = new Channel();
+		//setTimeout(done, 1000);
 		done();
 	});
 
 	afterEach(function(done){
-		if(thisChannel.wrappedChannel)
-			thisChannel.wrappedChannel.disconnect();
+		//if(thisChannel.wrappedChannel) {
+		//	ioscript = document.getElementById('ioscript');
+		//	ioscript.parentNode.removeChild(ioscript);
+		//	thisChannel.wrappedChannel.disconnect();			
+		//	var poolnode = document.getElementsByTagName('script')[0];
+		//	poolnode.parentNode.removeChild(poolnode);
+		//	var iosocketform = document.getElementsByClassName('socketio')[0];
+		//	if(iosocketform)
+		//		iosocketform.parentNode.removeChild(iosocketform);
+		//}
 		done();
 	});
 	
@@ -38,7 +50,6 @@ describe('Channel:\n', function(){
 		thisChannel.connectByName('http://p2pwebsharing.herokuapp.com', checkChannel);
 	});
 	
-	/* Due a bug into socket.io client, I can't connect twice to the same server!
 	it('Should be able to send messages', function(done) {
 		var sendMessage = function() {
 			thisChannel.send('cacca');
@@ -47,7 +58,7 @@ describe('Channel:\n', function(){
 		thisChannel.should.have.property('send');
 		thisChannel.connectByName('http://echotestserver.herokuapp.com', sendMessage);
 	});
-	*/
+	
 
 	it('Should throw an exception if user tries to send a message before he connects', function(done) {
 		try {

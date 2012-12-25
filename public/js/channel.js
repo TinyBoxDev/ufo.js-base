@@ -13,6 +13,9 @@ Channel.prototype.connectByName = function(serverAddress, onConnect) {
 	});
 }
 
+Channel.prototype.connectToPeer = function(loadedPeerConnection) {
+}
+
 Channel.prototype.send = function(packet) {
 	this.wrappedChannel.emit('p2pws', packet);
 }
