@@ -22,21 +22,21 @@ describe('Peer:\n', function(){
 			document.getElementsByTagName('head')[0].appendChild(ioscript);
 		}
 		thisPeer = new Peer('http://echotestserver.herokuapp.com');
-		setTimeout(done, 1000);
-	//	done();
+	//	setTimeout(done, 1000);
+		done();
 	});
 
 	afterEach(function(done){
-		if(thisPeer.channel.wrappedChannel) {
-			thisPeer.channel.wrappedChannel.disconnect();						
-			var ioscript = document.getElementById('ioscript');
-			ioscript.parentNode.removeChild(ioscript);
-			var poolnode = document.getElementsByTagName('script')[0];
-			poolnode.parentNode.removeChild(poolnode);
-			var iosocketform = document.getElementsByClassName('socketio')[0];
-			if(iosocketform)
-				iosocketform.parentNode.removeChild(iosocketform);
-		}
+	//	if(thisPeer.channel.wrappedChannel) {
+	//		thisPeer.channel.wrappedChannel.disconnect();						
+	//		var ioscript = document.getElementById('ioscript');
+	//		ioscript.parentNode.removeChild(ioscript);
+	//		var poolnode = document.getElementsByTagName('script')[0];
+	//		poolnode.parentNode.removeChild(poolnode);
+	//		var iosocketform = document.getElementsByClassName('socketio')[0];
+	//		if(iosocketform)
+	//			iosocketform.parentNode.removeChild(iosocketform);
+	//	}
 		done();
 	});
 
@@ -86,7 +86,6 @@ describe('Peer:\n', function(){
 		}
 		var pc = new mozRTCPeerConnection();		
 		pc.onconnection = function() {
-			console.log('connesso');
 			done();
 		}
 		thisPeer.channel.connectToPeer = checkDataChannel; 

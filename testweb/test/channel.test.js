@@ -11,6 +11,12 @@ describe('Channel:\n', function(){
 	});
 	
 	after(function(done){
+		if(!document.getElementById('ioscript')) {
+			var ioscript = document.createElement('script');
+			ioscript.src = "http://echotestserver.herokuapp.com/socket.io/socket.io.js";
+			ioscript.id = "ioscript"
+			document.getElementsByTagName('head')[0].appendChild(ioscript);
+		}
 		done();
 	});
 	

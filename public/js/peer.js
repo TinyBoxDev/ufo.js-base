@@ -29,6 +29,7 @@ Peer.prototype.lookForAPeer = function() {
 		self.peerConnection.setLocalDescription(offer);
 		self.channel.send(packet);
 	}
+	
 
 	this.peerConnection = new mozRTCPeerConnection();
 	navigator.mozGetUserMedia({audio:true, fake:true}, onFakeStreamDone, generalFailureCallback);	
