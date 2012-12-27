@@ -34,6 +34,10 @@ Peer.prototype.lookForAPeer = function() {
 	navigator.mozGetUserMedia({audio:true, fake:true}, onFakeStreamDone, generalFailureCallback);	
 }
 
+Peer.prototype.setPeeringCallback = function(peeringCallback) {
+	this.channel.on('peering', peeringCallback);
+}
+
 var generalFailureCallback = function(errorMessage) {
 	throw errorMessage
 }
