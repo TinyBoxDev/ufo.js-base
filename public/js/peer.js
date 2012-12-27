@@ -1,17 +1,23 @@
 var Peer = function(bootstrapServerAddress) {
 	var self = this;
-
-	/* Step 2I of the peering process: take the answer received and instantiate a datachannel */
-	var onPeeringReply = function(reply) {
-		self.peerConnection.setRemoteDescription(reply.answer);
-		this.connectToPeer(self.peerConnection);
-	}
-	
-	this.peerConnection = null;
-
 	this.channel = new Channel();
-	this.channel.on('peeringReply', onPeeringReply);
-	this.channel.connectByName(bootstrapServerAddress);
+	
+	if(bootstrapServerAddress) {
+		/* Step 2I of the peering process: take the answer received and instantiate a datachannel */
+		var onPeeringReply = function(reply) {
+			// TODO: allocate datachannel!
+			self.peerConnection.setRemoteDescription(reply.answer);
+			this.setChannel(self.peerConnection);
+		}
+		
+		this.peerConnection = null;
+		this.channel.on('peeringReply', onPeeringReply);
+		this.channel.connectByName(bootstrapServerAddress);
+	}
+}
+
+Peer.prototype.connectToPeer = function(channel) {
+	this.channel.setChannel(channel);
 }
 
 Peer.prototype.lookForAPeer = function() {

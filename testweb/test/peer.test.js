@@ -67,7 +67,7 @@ describe('Peer:\n', function(){
 		thisPeer.lookForAPeer();
 	});
 
-	it('Should take an answer and perform the connection', function(done) {
+	it('Should take an answer and perform connection', function(done) {
 		var onOffer = function(pkt) {
 			pc.setRemoteDescription(pkt.offer, prepareAnswer, function(){});
 		}
