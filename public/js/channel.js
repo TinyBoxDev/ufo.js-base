@@ -13,7 +13,8 @@ Channel.prototype.connectByName = function(serverAddress, onConnect) {
 	});
 }
 
-Channel.prototype.connectToPeer = function(loadedPeerConnection) {
+Channel.prototype.setChannel = function(peerSocket) {
+	this.wrappedChannel = peerSocket;
 }
 
 Channel.prototype.send = function(packet) {

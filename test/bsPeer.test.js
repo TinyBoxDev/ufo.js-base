@@ -1,7 +1,12 @@
 require('should');
+var BSPeer = require('bsPeer').bsPeer;
 var assert = require('assert');
 
-describe('Peer:\n', function(){
+describe('BSPeer:\n', function(){
+	//this.timeout(15000);
+	var thisBSPeer = null;
+	
+	
 	before(function(done){
 		done();
 	});
@@ -11,7 +16,8 @@ describe('Peer:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		done();
+		thisBSPeer = new BSPeer();
+		//done();
 	});
 
 	afterEach(function(done){

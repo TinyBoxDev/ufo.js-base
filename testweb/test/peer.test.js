@@ -67,7 +67,7 @@ describe('Peer:\n', function(){
 		thisPeer.lookForAPeer();
 	});
 
-	it('Should take an answer and perform the connection', function(done) {
+	it('Should take an answer and perform connection', function(done) {
 		var onOffer = function(pkt) {
 			pc.setRemoteDescription(pkt.offer, prepareAnswer, function(){});
 		}
@@ -95,4 +95,14 @@ describe('Peer:\n', function(){
 	 	}, function(err) { alert("Error " + err); });
 		thisPeer.lookForAPeer();			
 	});
+	
+	it('Should manage a peering request', function(done) {
+		var onPeering = function() {
+			done();
+		}
+		
+		thisPeer.setPeeringCallback(onPeering);
+		thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
+	});
+	
 });
