@@ -77,18 +77,17 @@ describe('Peer:\n', function(){
 		var sendAnswer = function(answer) {
 			pc.setLocalDescription(answer);
 			thisPeer.channel.send(new p2pPacket.p2pPacket('peeringReply', new peeringReplyPacket.peeringReplyPacket(answer)));
-		}
-		var checkDataChannel = function(loadedPeerConnection) {
 			setTimeout(function() {
-				loadedPeerConnection.connectDataConnection(5000,5001);
 				pc.connectDataConnection(5001,5000);
 			}, 2000);
+
 		}
+		
 		var pc = new mozRTCPeerConnection();		
 		pc.onconnection = function() {
+			console.log('pc onconnection');
 			done();
 		}
-		thisPeer.channel.connectToPeer = checkDataChannel; 
 		thisPeer.channel.on('peering', onOffer);
 		navigator.mozGetUserMedia({audio:true, fake:true}, function(s) {
 	      		pc.addStream(s);

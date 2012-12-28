@@ -15,11 +15,13 @@ var Peer = function(bootstrapServerAddress) {
 	if(bootstrapServerAddress) {
 		/* Step 2I of the peering process: take the answer received and instantiate a datachannel */
 		var onPeeringReply = function(reply) {
-			// TODO: allocate datachannel!
-			//self.peerConnection.setRemoteDescription(reply.answer);
-			//this.setChannel(self.peerConnection);
-			console.log(reply);
+			self.peerConnection.setRemoteDescription(reply.answer, connectToPeer);
 		}
+
+		/* Step 3I of the peering process: connect to peer */
+		var connectToPeer = function() {
+			self.peerConnection.connectDataConnection(5000,5001);
+		}		
 		
 		this.peerConnection = null;
 		this.channel.on('peeringReply', onPeeringReply);
@@ -53,6 +55,13 @@ Peer.prototype.lookForAPeer = function() {
 	
 
 	this.peerConnection = new mozRTCPeerConnection();
+
+	/* Step 4I of the peering process: save data channel as new wrapped channel */
+	this.peerConnection.onconnection = function() {
+		console.log('onconnection');
+		self.channel.connectViaSocket(self.peerConnection.createDataChannel("Reliable data channel :)",{}));
+	}
+
 	navigator.mozGetUserMedia({audio:true, fake:true}, onFakeStreamDone, generalFailureCallback);	
 }
 

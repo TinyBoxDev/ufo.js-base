@@ -20,6 +20,7 @@ Channel.prototype.connectViaSocket = function(peerSocket) {
 		this.wrappedChannel = peerSocket;				
 		configureSocketIoSocket(this);
 	}
+	
 		
 }
 
