@@ -8,7 +8,8 @@
     "express" : "*",
     "should" : "*",
     "mocha" : "*",
-    "socket.io" : "*"
+    "socket.io" : "*",
+    "socket.io-client" : "*"
   },
   "engines": {
     "node": "0.8.x",
