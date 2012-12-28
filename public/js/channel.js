@@ -9,7 +9,7 @@ var Channel = function() {
 
 Channel.prototype.connectByName = function(serverAddress, onConnect) {
 	var self = this;
-	this.wrappedChannel = io.connect(serverAddress);
+	this.wrappedChannel = io.connect(serverAddress, {'force new connection' : true});
 	this.wrappedChannel.on('connect', onConnect);
 	configureSocketIoSocket(this);
 }
