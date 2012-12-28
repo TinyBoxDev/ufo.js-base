@@ -16,8 +16,8 @@ var Peer = function(bootstrapServerAddress) {
 	}
 }
 
-Peer.prototype.connectToPeer = function(channel) {
-	this.channel.setChannel(channel);
+Peer.prototype.setSocketForPeer = function(socket) {
+	this.channel.connectViaSocket(socket);
 }
 
 Peer.prototype.lookForAPeer = function() {
