@@ -7,6 +7,8 @@ var Channel = function() {
 	this.wrappedChannel = null;
 }
 
+Channel.prototype.send = null;
+
 Channel.prototype.connectByName = function(serverAddress, onConnect) {
 	var self = this;
 	this.wrappedChannel = io.connect(serverAddress, {'force new connection' : true});
@@ -20,12 +22,11 @@ Channel.prototype.connectViaSocket = function(peerSocket) {
 		this.wrappedChannel = peerSocket;				
 		configureSocketIoSocket(this);
 	}
-	
+	else if(peerSocket instanceof DataChannel) {
+		this.wrappedChannel = peerSocket;
+		this.send = this.wrappedChannel.send;
+	}
 		
-}
-
-Channel.prototype.send = function(packet) {
-	this.wrappedChannel.emit('p2pws', packet);
 }
 
 Channel.prototype.on = function(eventName, callback) {
@@ -37,6 +38,11 @@ var configureSocketIoSocket = function(channel) {
 		if(pkt.type && pkt.body)
 			channel[pkt.type].call(channel, pkt.body);
 	});
+
+	channel.send = function(packet) {
+		this.wrappedChannel.emit('p2pws', packet);
+	}
+
 }
 
 
