@@ -1,8 +1,9 @@
 (function(exports){
 
-var p2pPacket = function(currentType, currentBody) {
+var p2pPacket = function(currentType, currentBody, currentPath) {
 	this.type = currentType;
 	this.body = currentBody;
+	this.path = currentPath;
 }
 
 
