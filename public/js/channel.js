@@ -1,3 +1,6 @@
+if(!io)
+	var io = require('socket.io');
+
 (function(exports){
 
 var Channel = function() {
