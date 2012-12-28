@@ -1,7 +1,10 @@
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-require('bsPeer').startPeer(server);
+var BSPeer = require('bsPeer').BSPeer;
+
+bsPeer = new BSPeer();
+bsPeer.startServer(server);
 
 app.configure(function () {
 	// Show Errors Oppan Java Style
@@ -15,6 +18,7 @@ app.get('/', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
 	response.sendfile('index.html');
 });
+
 
 var port = process.env.PORT || 5000;
 server.listen(port, function() {
