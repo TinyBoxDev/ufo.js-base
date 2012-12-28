@@ -5,7 +5,7 @@ ifeq ($(UNAME), Darwin)
 endif
 
 test:
-	./node_modules/.bin/mocha test/*
+	NODE_PATH="./lib/:./public/js/" ./node_modules/.bin/mocha test/*
 	
 testweb:
 	$(BROWSER) ./testweb/runner.html

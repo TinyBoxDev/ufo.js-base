@@ -1,5 +1,7 @@
 if(!Channel)
-	var Channel = require('Channel');
+	var Channel = require('Channel').Channel;
+else
+	Channel = Channel.Channel;
 if(!p2pPacket)
 	var p2pPacket = require('p2pPacket');
 if(!peeringPacket)
@@ -10,7 +12,7 @@ if(!peeringReplyPacket)
 (function(exports){
 var Peer = function(bootstrapServerAddress) {
 	var self = this;
-	this.channel = new Channel.Channel();
+	this.channel = new Channel();
 	
 	if(bootstrapServerAddress) {
 		/* Step 2I of the peering process: take the answer received and instantiate a datachannel */
