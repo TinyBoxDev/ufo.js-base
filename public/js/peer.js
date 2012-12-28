@@ -1,13 +1,16 @@
+(function(exports){
+
 var Peer = function(bootstrapServerAddress) {
 	var self = this;
-	this.channel = new Channel();
+	this.channel = new Channel.Channel();
 	
 	if(bootstrapServerAddress) {
 		/* Step 2I of the peering process: take the answer received and instantiate a datachannel */
 		var onPeeringReply = function(reply) {
 			// TODO: allocate datachannel!
-			self.peerConnection.setRemoteDescription(reply.answer);
-			this.setChannel(self.peerConnection);
+			//self.peerConnection.setRemoteDescription(reply.answer);
+			//this.setChannel(self.peerConnection);
+			console.log(reply);
 		}
 		
 		this.peerConnection = null;
@@ -21,7 +24,7 @@ Peer.prototype.setSocketForPeer = function(socket) {
 }
 
 Peer.prototype.sendPeeringReply = function(answer) {
-	this.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(answer)));
+	this.channel.send(new p2pPacket.p2pPacket('peeringReply', new peeringReplyPacket.peeringReplyPacket(answer)));
 }
 
 Peer.prototype.lookForAPeer = function() {
@@ -35,7 +38,7 @@ Peer.prototype.lookForAPeer = function() {
 
 	/* Step 1I of the peering process: prepare an offer and send it to the bootstrap server */
 	var onOfferCreated = function(offer) {
-		var packet = new p2pPacket('peering', new peeringPacket(offer));
+		var packet = new p2pPacket.p2pPacket('peering', new peeringPacket.peeringPacket(offer));
 		self.peerConnection.setLocalDescription(offer);
 		self.channel.send(packet);
 	}
@@ -53,5 +56,6 @@ var generalFailureCallback = function(errorMessage) {
 	throw errorMessage
 }
 
-if(typeof exports != 'undefined')
-	exports.Peer = Peer;
+   exports.Peer = Peer;
+
+})(typeof exports === 'undefined'? this['Peer']={}: exports);

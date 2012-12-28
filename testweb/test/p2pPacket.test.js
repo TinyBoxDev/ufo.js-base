@@ -14,7 +14,7 @@ describe('P2P Packet:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisP2pPacket = new p2pPacket(null, null);
+		thisP2pPacket = new p2pPacket.p2pPacket(null, null);
 		done();
 	});
 
@@ -33,7 +33,7 @@ describe('P2P Packet:\n', function(){
 	});
 
 	it('Should initialize the fields', function(done) {
-		var anotherPacket = new p2pPacket('caccaType', 'caccaBody');
+		var anotherPacket = new p2pPacket.p2pPacket('caccaType', 'caccaBody');
 		anotherPacket.type.should.eql('caccaType');
 		anotherPacket.body.should.eql('caccaBody');
 		done();

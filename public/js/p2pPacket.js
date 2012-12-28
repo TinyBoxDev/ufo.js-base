@@ -1,8 +1,12 @@
+(function(exports){
+
 var p2pPacket = function(currentType, currentBody) {
 	this.type = currentType;
 	this.body = currentBody;
 }
 
 
-if(typeof exports != 'undefined')
-	exports.p2pPacket = p2pPacket;
+
+   exports.p2pPacket = p2pPacket;
+
+})(typeof exports === 'undefined'? this['p2pPacket']={}: exports);

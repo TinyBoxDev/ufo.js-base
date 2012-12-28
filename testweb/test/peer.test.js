@@ -21,7 +21,8 @@ describe('Peer:\n', function(){
 	//		ioscript.id = "ioscript"
 	//		document.getElementsByTagName('head')[0].appendChild(ioscript);
 	//	}
-		thisPeer = new Peer('http://echotestserver.herokuapp.com');
+		console.log(Peer.Peer);
+		thisPeer = new Peer.Peer('http://echotestserver.herokuapp.com');
 	//	setTimeout(done, 1000);
 		done();
 	});
@@ -76,7 +77,7 @@ describe('Peer:\n', function(){
 		}
 		var sendAnswer = function(answer) {
 			pc.setLocalDescription(answer);
-			thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(answer)));
+			thisPeer.channel.send(new p2pPacket.p2pPacket('peeringReply', new peeringReplyPacket.peeringReplyPacket(answer)));
 		}
 		var checkDataChannel = function(loadedPeerConnection) {
 			setTimeout(function() {
@@ -102,7 +103,7 @@ describe('Peer:\n', function(){
 		}
 		
 		thisPeer.setPeeringCallback(onPeering);
-		thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
+		thisPeer.channel.send(new p2pPacket.p2pPacket('peering', new peeringPacket.peeringPacket('my offer')));
 	});
 
 	it('Should send peering reply', function(done) {

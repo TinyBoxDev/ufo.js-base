@@ -1,3 +1,5 @@
+(function(exports){
+
 var Channel = function() {
 	this.wrappedChannel = null;
 }
@@ -34,5 +36,7 @@ var configureSocketIoSocket = function(channel) {
 }
 
 
-if(typeof exports != 'undefined')
-	exports.Channel = Channel;
+
+   exports.Channel = Channel;
+
+})(typeof exports === 'undefined'? this['Channel']={}: exports);
