@@ -15,12 +15,12 @@ describe('Peer:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		if(!document.getElementById('ioscript')) {
-			var ioscript = document.createElement('script');
-			ioscript.src = "http://echotestserver.herokuapp.com/socket.io/socket.io.js";
-			ioscript.id = "ioscript"
-			document.getElementsByTagName('head')[0].appendChild(ioscript);
-		}
+	//	if(!document.getElementById('ioscript')) {
+	//		var ioscript = document.createElement('script');
+	//		ioscript.src = "http://echotestserver.herokuapp.com/socket.io/socket.io.js";
+	//		ioscript.id = "ioscript"
+	//		document.getElementsByTagName('head')[0].appendChild(ioscript);
+	//	}
 		thisPeer = new Peer('http://echotestserver.herokuapp.com');
 	//	setTimeout(done, 1000);
 		done();
@@ -97,12 +97,22 @@ describe('Peer:\n', function(){
 	});
 	
 	it('Should manage a peering request', function(done) {
-		var onPeering = function() {
+		var onPeering = function(peering) {
 			done();
 		}
 		
 		thisPeer.setPeeringCallback(onPeering);
 		thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
+	});
+
+	it('Should send peering reply', function(done) {
+		var onPeeringReply = function(reply) {
+			assert(reply.answer == 'cacca');
+			done();
+		}
+		thisPeer.channel.on('peeringReply', onPeeringReply);
+		thisPeer.sendPeeringReply('cacca');
+
 	});
 	
 });

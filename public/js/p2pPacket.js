@@ -3,4 +3,6 @@ var p2pPacket = function(currentType, currentBody) {
 	this.body = currentBody;
 }
 
-exports.p2pPacket = p2pPacket;
+
+if(typeof exports != 'undefined')
+	exports.p2pPacket = p2pPacket;

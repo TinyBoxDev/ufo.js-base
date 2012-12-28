@@ -20,6 +20,10 @@ Peer.prototype.setSocketForPeer = function(socket) {
 	this.channel.connectViaSocket(socket);
 }
 
+Peer.prototype.sendPeeringReply = function(answer) {
+	this.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(answer)));
+}
+
 Peer.prototype.lookForAPeer = function() {
 	var self = this;
 
@@ -49,4 +53,5 @@ var generalFailureCallback = function(errorMessage) {
 	throw errorMessage
 }
 
-exports.Peer = Peer;
+if(typeof exports != 'undefined')
+	exports.Peer = Peer;
