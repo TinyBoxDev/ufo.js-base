@@ -48,3 +48,5 @@ Peer.prototype.setPeeringCallback = function(peeringCallback) {
 var generalFailureCallback = function(errorMessage) {
 	throw errorMessage
 }
+
+exports.Peer = Peer;
