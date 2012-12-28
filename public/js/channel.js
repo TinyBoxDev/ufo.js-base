@@ -16,7 +16,7 @@ Channel.prototype.connectByName = function(serverAddress, onConnect) {
 
 Channel.prototype.connectViaSocket = function(peerSocket) {
 	var self = this;
-	if(peerSocket.socket instanceof io.Socket) {
+	if(peerSocket instanceof io.Socket || peerSocket.socket instanceof io.Socket) {
 		this.wrappedChannel = peerSocket;				
 		configureSocketIoSocket(this);
 	}
