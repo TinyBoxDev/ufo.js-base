@@ -21,7 +21,6 @@ describe('Peer:\n', function(){
 	//		ioscript.id = "ioscript"
 	//		document.getElementsByTagName('head')[0].appendChild(ioscript);
 	//	}
-		console.log(Peer.Peer);
 		thisPeer = new Peer.Peer('http://echotestserver.herokuapp.com');
 	//	setTimeout(done, 1000);
 		done();

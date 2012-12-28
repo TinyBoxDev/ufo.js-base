@@ -1,5 +1,7 @@
-(function(exports){
+if(!Channel)
+	var Channel = require('Channel');
 
+(function(exports){
 var Peer = function(bootstrapServerAddress) {
 	var self = this;
 	this.channel = new Channel.Channel();
