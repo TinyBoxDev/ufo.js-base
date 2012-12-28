@@ -1,11 +1,11 @@
-//if(!Channel)
-//	var Channel = require('channel');
-//if(!p2pPacket)
-//	var p2pPacket = require('p2pPacket');
-//if(!peeringPacket)
-//	var peeringPacket = require('peeringPacket');
-//if(!peeringReplyPacket) 
-//	var peeringReplyPacket = require('peeringReplyPacket');
+if(!Channel)
+	var Channel = require('channel');
+if(!p2pPacket)
+	var p2pPacket = require('p2pPacket');
+if(!peeringPacket)
+	var peeringPacket = require('peeringPacket');
+if(!peeringReplyPacket) 
+	var peeringReplyPacket = require('peeringReplyPacket');
 
 (function(exports){
 var Peer = function(bootstrapServerAddress) {
