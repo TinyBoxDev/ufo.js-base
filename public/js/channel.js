@@ -34,3 +34,5 @@ var configureSocketIoSocket = function(channel) {
 }
 
 
+if(typeof exports != 'undefined')
+	exports.Channel = Channel;
