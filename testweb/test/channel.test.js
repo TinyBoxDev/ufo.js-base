@@ -90,5 +90,20 @@ describe('Channel:\n', function(){
 		thisChannel.on('cacca', onReplyReceived);
 		thisChannel.connectByName('http://echotestserver.herokuapp.com', sendMessage);
 	});
+
+	it('Should be able to set a socket', function(done) {
+		var testNewSocket = function(reply) {
+			done();
+		}	
+
+		var onConnect = function() {
+			thisChannel.connectViaSocket(newSocket);
+			thisChannel.on('test', testNewSocket);
+			thisChannel.send(new p2pPacket('test', 'cacca'));	
+		}
+
+		var newSocket = io.connect('http://echotestserver.herokuapp.com');
+		newSocket.on('connect', onConnect);
+	});
 	
 });
