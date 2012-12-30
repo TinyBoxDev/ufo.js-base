@@ -6,11 +6,19 @@
   "repository": "https://github.com/TinyBoxDev/p2pwebsharing.git",
   "dependencies" : {
     "express" : "*",
-    "should" : "*",
-    "mocha" : "*",
-    "socket.io" : "*",
-    "socket.io-client" : "*"
+    "socket.io" : "*"
   },
+  "devDependencies" : {
+    "socket.io-client" : "*",
+    "browserify" : "*",
+    "uglify-js" : "*",
+    "should" : "*",
+    "mocha" : "*"
+  },
+  "directories" : {
+    "lib" : "./lib"
+  },
+  "browserify" : "lib/client.js",
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"

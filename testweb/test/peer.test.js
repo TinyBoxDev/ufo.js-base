@@ -15,28 +15,11 @@ describe('Peer:\n', function(){
 	});
 	
 	beforeEach(function(done){
-	//	if(!document.getElementById('ioscript')) {
-	//		var ioscript = document.createElement('script');
-	//		ioscript.src = "http://echotestserver.herokuapp.com/socket.io/socket.io.js";
-	//		ioscript.id = "ioscript"
-	//		document.getElementsByTagName('head')[0].appendChild(ioscript);
-	//	}
-		thisPeer = new Peer.Peer('http://echotestserver.herokuapp.com');
-	//	setTimeout(done, 1000);
+		thisPeer = new Peer('http://echotestserver.herokuapp.com');
 		done();
 	});
 
 	afterEach(function(done){
-	//	if(thisPeer.channel.wrappedChannel) {
-	//		thisPeer.channel.wrappedChannel.disconnect();						
-	//		var ioscript = document.getElementById('ioscript');
-	//		ioscript.parentNode.removeChild(ioscript);
-	//		var poolnode = document.getElementsByTagName('script')[0];
-	//		poolnode.parentNode.removeChild(poolnode);
-	//		var iosocketform = document.getElementsByClassName('socketio')[0];
-	//		if(iosocketform)
-	//			iosocketform.parentNode.removeChild(iosocketform);
-	//	}
 		done();
 	});
 
@@ -76,7 +59,7 @@ describe('Peer:\n', function(){
 		}
 		var sendAnswer = function(answer) {
 			pc.setLocalDescription(answer);
-			thisPeer.channel.send(new p2pPacket.p2pPacket('peeringReply', new peeringReplyPacket.peeringReplyPacket(answer)));
+			thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(answer)));
 			setTimeout(function() {
 				pc.connectDataConnection(5001,5000);
 			}, 2000);
@@ -101,7 +84,7 @@ describe('Peer:\n', function(){
 		}
 		
 		thisPeer.setPeeringCallback(onPeering);
-		thisPeer.channel.send(new p2pPacket.p2pPacket('peering', new peeringPacket.peeringPacket('my offer')));
+		thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
 	});
 
 	it('Should send peering reply', function(done) {

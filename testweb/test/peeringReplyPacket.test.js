@@ -14,7 +14,7 @@ describe('Peering Reply Packet:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisPeeringReplyPacket = new peeringReplyPacket.peeringReplyPacket(null);
+		thisPeeringReplyPacket = new peeringReplyPacket(null);
 		done();
 	});
 
@@ -28,7 +28,7 @@ describe('Peering Reply Packet:\n', function(){
 	});
 
 	it('Should initialize the answer field', function(done) {
-		var anotherPacket = new peeringReplyPacket.peeringReplyPacket('cacca');
+		var anotherPacket = new peeringReplyPacket('cacca');
 		anotherPacket.answer.should.eql('cacca');
 		done();
 	});

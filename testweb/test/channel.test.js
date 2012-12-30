@@ -11,38 +11,15 @@ describe('Channel:\n', function(){
 	});
 	
 	after(function(done){
-//		if(!document.getElementById('ioscript')) {
-//			var ioscript = document.createElement('script');
-//			ioscript.src = "http://echotestserver.herokuapp.com/socket.io/socket.io.js";
-//			ioscript.id = "ioscript"
-//			document.getElementsByTagName('head')[0].appendChild(ioscript);
-//		}
 		done();
 	});
 	
 	beforeEach(function(done){
-//		if(!document.getElementById('ioscript')) {
-//			var ioscript = document.createElement('script');
-//			ioscript.src = "http://echotestserver.herokuapp.com/socket.io/socket.io.js";
-//			ioscript.id = "ioscript"
-//			document.getElementsByTagName('head')[0].appendChild(ioscript);
-//		}
-		thisChannel = new Channel.Channel();
-//		setTimeout(done, 1000);
+		thisChannel = new Channel();
 		done();
 	});
 
 	afterEach(function(done){
-//		if(thisChannel && thisChannel.wrappedChannel) {
-//			thisChannel.wrappedChannel.disconnect();						
-//			var ioscript = document.getElementById('ioscript');
-//			ioscript.parentNode.removeChild(ioscript);
-//			var poolnode = document.getElementsByTagName('script')[0];
-//			poolnode.parentNode.removeChild(poolnode);
-//			var iosocketform = document.getElementsByClassName('socketio')[0];
-//			if(iosocketform)
-//				iosocketform.parentNode.removeChild(iosocketform);
-//		}
 		done();
 	});
 	
@@ -85,7 +62,7 @@ describe('Channel:\n', function(){
 			done();
 		}
 		var sendMessage = function() {
-			thisChannel.send(new p2pPacket.p2pPacket('cacca', 'caccabody'));			
+			thisChannel.send(new p2pPacket('cacca', 'caccabody'));			
 		}
 		thisChannel.on('cacca', onReplyReceived);
 		thisChannel.connectByName('http://echotestserver.herokuapp.com', sendMessage);
@@ -99,7 +76,7 @@ describe('Channel:\n', function(){
 		var onConnect = function() {
 			thisChannel.connectViaSocket(newSocket);
 			thisChannel.on('test', testNewSocket);
-			thisChannel.send(new p2pPacket.p2pPacket('test', 'cacca'));	
+			thisChannel.send(new p2pPacket('test', 'cacca'));	
 		}
 
 		var newSocket = io.connect('http://echotestserver.herokuapp.com');

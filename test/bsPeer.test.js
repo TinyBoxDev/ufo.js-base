@@ -2,7 +2,7 @@ require('should');
 var BSPeer = require('../lib/bsPeer');
 var assert = require('assert');
 var io = require('socket.io-client');
-var p2pPacket = require('../public/js/p2pPacket').p2pPacket;
+var p2pPacket = require('../lib/p2pPacket').p2pPacket;
 var options ={ 'force new connection': true };
 
 describe('BSPeer:\n', function(){

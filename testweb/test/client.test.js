@@ -10,7 +10,7 @@ describe('Client:\n', function() {
 	});
 	
 	beforeEach(function(done) {
-		thisClient = new Client.Client();
+		thisClient = new Client();
 		done();
 	});
 

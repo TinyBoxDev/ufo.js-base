@@ -3,7 +3,8 @@ var app = express();
 var server = require('http').createServer(app);
 var BSPeer = require('bsPeer').BSPeer;
 
-bsPeer = new BSPeer();
+
+var bsPeer = new BSPeer();
 bsPeer.startServer(server);
 
 app.configure(function () {
@@ -12,6 +13,7 @@ app.configure(function () {
 	
 	// Static Files Folder
 	app.use(express.static(__dirname + '/public'));
+
 });
 
 app.get('/', function(request, response) {
