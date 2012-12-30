@@ -10,9 +10,9 @@ compile:
 	rm lib/client.bundle.js
 
 test:
-	NODE_PATH="./lib/:./public/js/" ./node_modules/.bin/mocha test/*
+	NODE_PATH="./lib/" ./node_modules/.bin/mocha test/*
 	
-testweb:
+testweb:   compile
 	$(BROWSER) ./testweb/runner.html
 
 clean:

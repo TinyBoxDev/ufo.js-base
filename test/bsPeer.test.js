@@ -1,3 +1,6 @@
+if(typeof window === 'undefined')
+	window = global; // write once run everywhere
+
 require('should');
 var BSPeer = require('../lib/bsPeer');
 var assert = require('assert');

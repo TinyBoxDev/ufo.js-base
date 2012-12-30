@@ -1,8 +1,10 @@
+if(typeof window === 'undefined')
+	window = global; // write once run everywhere
+
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var BSPeer = require('bsPeer').BSPeer;
-
 
 var bsPeer = new BSPeer();
 bsPeer.startServer(server);
