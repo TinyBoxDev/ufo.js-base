@@ -15,7 +15,7 @@ describe('Peer:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisPeer = new Peer('http://echotestserver.herokuapp.com');
+		thisPeer = new Peer('http://helloiampau.echotestserver.jit.su/');
 		done();
 	});
 
@@ -32,11 +32,6 @@ describe('Peer:\n', function(){
 
 	it('Should have a peer connection object', function(done) {
 		thisPeer.should.have.property('peerConnection');
-		done();
-	});
-
-	it('The channel should have a peering reply method', function(done) {
-		thisPeer.channel.should.have.property('peeringReply');
 		done();
 	});
 
@@ -83,7 +78,7 @@ describe('Peer:\n', function(){
 			done();
 		}
 		
-		thisPeer.setPeeringCallback(onPeering);
+		thisPeer.channel.on('peering', onPeering);
 		thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
 	});
 
