@@ -27,14 +27,15 @@
   <div class="container">
 
 	<script>
-		var thisClient = new Client.Client();
-		thisClient.setViewDuringBootstrap = function() {
-			$('#bootstrapBtn').addClass('disabled');	
+		var runClient = function() {
+			$('#bootstrapBtn').addClass('disabled');
+			client.onPeerFound = function() {
+				$('#bootstrapRow').remove();
+				$('#peersRow').toggle();
+			}
+			client.bootstrap();		
 		}
-		thisClient.onBootstrapPerformed = function() {
-			$('#bootstrapRow').remove();	
-			$('#peersRow').toggle();
-		}
+
 	</script>
 
 	<div class="masthead">
@@ -43,7 +44,7 @@
 	<hr>
 	<div class="row" id="bootstrapRow">
         	<div class="span6 offset3" align="center">
-			<button class="btn btn-large btn-warning" type="button" id="bootstrapBtn" onClick="thisClient.bootstrap();">Bootstrap</button>
+			<button class="btn btn-large btn-warning" type="button" id="bootstrapBtn" onClick="runClient();">Bootstrap</button>
 		</div>
 	</div>
 	<div class="row" id="peersRow" style="display: none;">

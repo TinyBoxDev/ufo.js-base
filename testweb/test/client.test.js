@@ -1,4 +1,5 @@
 describe('Client:\n', function() {
+	this.timeout(15000);
 	var thisClient = null;
 	
 	before(function(done){
@@ -10,7 +11,6 @@ describe('Client:\n', function() {
 	});
 	
 	beforeEach(function(done) {
-		thisClient = new Client();
 		done();
 	});
 
@@ -19,9 +19,15 @@ describe('Client:\n', function() {
 	});
 	
 	it('Should have a peer array', function(done) {
-		thisClient.should.have.property('connectionPool');
-		assert(thisClient.connectionPool instanceof Array);
+		client.should.have.property('connectionPool');
+		assert(client.connectionPool instanceof Array);
 		done();
-    });
+    	});
+
+	it('Should perform a bootstrap', function(done) {
+		client.onPeerFound = done;
+
+		client.bootstrap();
+	});
 	
 });
