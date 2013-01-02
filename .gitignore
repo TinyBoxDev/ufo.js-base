@@ -22,3 +22,5 @@ node_modules/*
 public/js/client.min.js
 
 *.esproj
+nohup.out
+
