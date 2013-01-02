@@ -1,12 +1,10 @@
-if(typeof window === 'undefined')
-	window = global; // write once run everywhere
-
+window = global;
+var http = require('http');
 require('should');
 var BSPeer = require('../lib/bsPeer');
 var assert = require('assert');
-var io = require('socket.io-client');
+var WebSocket = require('ws');
 var p2pPacket = require('../lib/p2pPacket').p2pPacket;
-var options ={ 'force new connection': true };
 
 describe('BSPeer:\n', function(){
 	//this.timeout(15000);
@@ -15,9 +13,7 @@ describe('BSPeer:\n', function(){
 	
     before(function(done) {
 	thisBSPeer = new BSPeer.BSPeer();
-	server = require('http').createServer();
-	thisBSPeer.startServer(server);
-	server.listen(8080);
+	thisBSPeer.startServer();
 	done();
     });
 
@@ -50,8 +46,8 @@ describe('BSPeer:\n', function(){
 	    done();
 	}
 	
-	var testClient = io.connect('http://0.0.0.0:8080', options);
-	testClient.on('connect', onConnectionPerformed);
+	var testClient = new WebSocket('ws://0.0.0.0:8080');
+	testClient.on('open', onConnectionPerformed);
     });
 
     it('Should accept a peering request if pool is not full', function(done) {
@@ -65,12 +61,12 @@ describe('BSPeer:\n', function(){
 	}
 
 	var sendPeeringRequest = function() {
-	    testClient.emit('p2pws', new p2pPacket('peering', 'test request'));
+	    testClient.send(new p2pPacket('peering', 'test request').toString());
 	}
 
-	var testClient = io.connect('http://0.0.0.0:8080', options);
-	testClient.on('connect', sendPeeringRequest);
-	testClient.on('p2pws', checkPeeringReply);
+	var testClient = new WebSocket('ws://0.0.0.0:8080');
+	testClient.on('open', sendPeeringRequest);
+	testClient.on('message', checkPeeringReply);
     });
 
     it('Should broadcast a peering request if pool is full', function(done) {
@@ -81,16 +77,16 @@ describe('BSPeer:\n', function(){
 	    data.body.should.have.property('answer');
 	    //assert(data.body.answer != null);
 	    //setTimeout(done, 5000);
-		done();
+	    done();
 	}
 
 	var sendPeeringRequest = function() {
-	    testClient.emit('p2pws', new p2pPacket('peering', 'test request'));
+	    testClient.send(new p2pPacket('peering', 'test request').toString());
 	}
-	
-	var testClient = io.connect('http://0.0.0.0:8080', options);
-	testClient.on('connect', sendPeeringRequest);
-	testClient.on('p2pws', checkPeeringReply)
+
+	var testClient = new WebSocket('ws://0.0.0.0:8080');
+	testClient.on('open', sendPeeringRequest);
+	testClient.on('message', checkPeeringReply)
 	
     });
     
