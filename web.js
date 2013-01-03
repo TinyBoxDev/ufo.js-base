@@ -4,9 +4,9 @@ if(typeof window === 'undefined')
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
-var bspeer = require('bsPeer').bspeer;
+var client = require('bsPeer').bspeer;
 
-bspeer.startServer(server);
+client.startServer(server);
 
 app.configure(function () {
 	// Show Errors Oppan Java Style

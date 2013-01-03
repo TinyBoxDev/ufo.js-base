@@ -39,7 +39,7 @@ describe('Channel:\n', function(){
 	
 	it('Should be able to send messages', function(done) {
 		var sendMessage = function() {
-			thisChannel.send('cacca');
+			thisChannel.send(new p2pPacket('cacca', 'cacca'));
 			thisChannel.wrappedChannel.close();
 			done();
 		}
