@@ -77,8 +77,6 @@ describe('BSPeer:\n', function(){
 	    data.should.have.property('type');
 	    assert(data.type == 'peeringReply');
 	    data.body.should.have.property('answer');
-	    //assert(data.body.answer != null);
-	    //setTimeout(done, 5000);
 	    done();
 	}
 
