@@ -9,11 +9,11 @@ var p2pPacket = require('../lib/p2pPacket').p2pPacket;
 describe('BSPeer:\n', function(){
 	//this.timeout(15000);
 	var thisBSPeer = null;
-	var server = null;
+	var server = http.createServer().listen(8080);
 	
     before(function(done) {
 	thisBSPeer = new BSPeer.BSPeer();
-	thisBSPeer.startServer();
+	thisBSPeer.startServer(server);
 	done();
     });
 
