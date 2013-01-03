@@ -30,8 +30,8 @@ describe('BSPeer:\n', function(){
     });
 
     it('Should have a peer array', function(done) {
-	thisBSPeer.should.have.property('connectionPool');
-	assert(thisBSPeer.connectionPool instanceof Array);
+	thisBSPeer.should.have.property('pool');
+	assert(thisBSPeer.pool instanceof connectionPool);
 	done();
     });
 
