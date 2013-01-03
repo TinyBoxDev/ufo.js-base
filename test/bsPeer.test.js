@@ -12,7 +12,7 @@ describe('BSPeer:\n', function(){
 	var server = http.createServer().listen(8080);
 	
     before(function(done) {
-	thisBSPeer = new BSPeer.BSPeer();
+	thisBSPeer = BSPeer.bspeer;
 	thisBSPeer.startServer(server);
 	done();
     });
