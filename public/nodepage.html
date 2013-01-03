@@ -31,6 +31,7 @@
 			client.onPeerFound = function() {
 				$('#bootstrapRow').remove();
 				$('#peersRow').toggle();
+		$('#clientid').html("Well done! Your id is " + client.id);
 			}
 			client.bootstrap();		
 		}
@@ -47,7 +48,10 @@
 		</div>
 	</div>
 	<div class="row" id="peersRow" style="display: none;">
-		Peers informations!
+	  <div class ="span6 offset3" align="center">
+		<h4>Peers informations!</h4>
+		<p id="clientid"></p>
+	  </div>
 	</div>
 		
   </div>
