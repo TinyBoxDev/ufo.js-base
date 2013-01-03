@@ -24,6 +24,16 @@ describe('Client:\n', function() {
 		done();
     	});
 
+    it('Should have an id after bootstrap', function(done) {
+	client.should.have.property('id');
+	assert(client.id === null);
+	client.onPeerFound = function() {
+	    assert(client.id != null);
+	    done();
+	}
+	client.bootstrap();
+    });
+
 	it('Should perform a bootstrap', function(done) {
 		client.onPeerFound = done;
 

@@ -55,10 +55,11 @@ describe('BSPeer:\n', function(){
 	var checkPeeringReply = function(data) {
 	    data = JSON.parse(data);
 	    data.should.have.property('type');
-	    assert(data.type == 'peeringReply');
-	    data.body.should.have.property('answer');
-	    assert(data.body.answer == null);
-	    done();
+	    if(data.type == 'peeringReply') {
+		data.body.should.have.property('answer');
+		assert(data.body.answer == null);
+		done();
+	    }
 	}
 
 	var sendPeeringRequest = function() {
@@ -75,9 +76,10 @@ describe('BSPeer:\n', function(){
 	var checkPeeringReply = function(data) {
 	    data = JSON.parse(data);	    
 	    data.should.have.property('type');
-	    assert(data.type == 'peeringReply');
-	    data.body.should.have.property('answer');
-	    done();
+	    if(data.type == 'peeringReply') {
+		data.body.should.have.property('answer');
+		done();
+	    }
 	}
 
 	var sendPeeringRequest = function() {
