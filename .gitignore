@@ -16,7 +16,7 @@ npm-debug.log
 .DS_Store
 
 node_modules/*
-
+log/*.log
 *.swp
 
 public/js/client.min.js
