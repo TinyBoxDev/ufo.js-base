@@ -66,14 +66,17 @@ describe('Peer:\n', function(){
 		}
 		
 		var pc = new mozRTCPeerConnection();		
-		pc.onconnection = function() {
-			done();
+		var onBootstrap = function() {
+			pc.onconnection = function() {
+				done();
+			}
+			thisPeer.channel.on('peering', onOffer);
+			navigator.mozGetUserMedia({audio:true, fake:true}, function(s) {
+	      			pc.addStream(s);
+	 		}, function(err) { alert("Error " + err); });
+			thisPeer.lookForAPeer();
 		}
-		thisPeer.channel.on('peering', onOffer);
-		navigator.mozGetUserMedia({audio:true, fake:true}, function(s) {
-	      		pc.addStream(s);
-	 	}, function(err) { alert("Error " + err); });
-		thisPeer.lookForAPeer();			
+		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);		
 	});
 	
 	it('Should manage a peering request', function(done) {
