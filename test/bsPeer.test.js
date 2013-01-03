@@ -7,7 +7,7 @@ var WebSocket = require('ws');
 var p2pPacket = require('../lib/p2pPacket').p2pPacket;
 
 describe('BSPeer:\n', function(){
-	//this.timeout(15000);
+	//this.timeout(35000);
 	var thisBSPeer = null;
 	var server = http.createServer().listen(8080);
 	
