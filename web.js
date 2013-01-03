@@ -23,7 +23,6 @@ app.get('/', function(request, response) {
 	response.sendfile('index.html');
 });
 
-
 var port = process.env.PORT || 8080;
 server.listen(port, function() {
   console.log("Listening on " + port);
