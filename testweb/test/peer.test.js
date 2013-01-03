@@ -15,7 +15,7 @@ describe('Peer:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisPeer = new Peer('http://helloiampau.echotestserver.jit.su/');
+		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/');
 		done();
 	});
 
@@ -41,8 +41,12 @@ describe('Peer:\n', function(){
 			assert(reply.offer!=null);
 			done();
 		}	
-		thisPeer.channel.on('peering', checkPacket);
-		thisPeer.lookForAPeer();
+		var onBootstrap = function() {
+			thisPeer.channel.on('peering', checkPacket);
+			thisPeer.lookForAPeer();
+		}
+
+		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);
 	});
 
 	it('Should take an answer and perform connection', function(done) {
@@ -63,7 +67,6 @@ describe('Peer:\n', function(){
 		
 		var pc = new mozRTCPeerConnection();		
 		pc.onconnection = function() {
-			console.log('pc onconnection');
 			done();
 		}
 		thisPeer.channel.on('peering', onOffer);
@@ -78,8 +81,13 @@ describe('Peer:\n', function(){
 			done();
 		}
 		
-		thisPeer.channel.on('peering', onPeering);
-		thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
+		var onBootstrap = function() {
+			thisPeer.channel.on('peering', onPeering);
+			thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
+		}
+
+		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/',  onBootstrap);
+
 	});
 
 	it('Should send peering reply', function(done) {
@@ -87,8 +95,13 @@ describe('Peer:\n', function(){
 			assert(reply.answer == 'cacca');
 			done();
 		}
-		thisPeer.channel.on('peeringReply', onPeeringReply);
-		thisPeer.sendPeeringReply('cacca');
+
+		var onBootstrap = function() {
+			thisPeer.channel.on('peeringReply', onPeeringReply);
+			thisPeer.sendPeeringReply('cacca');
+		}
+
+		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/',  onBootstrap);
 
 	});
 	

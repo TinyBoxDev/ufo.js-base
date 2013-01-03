@@ -34,16 +34,17 @@ describe('Channel:\n', function(){
 			done();			
 		}
 		thisChannel.should.have.property('connectByName');
-		thisChannel.connectByName('http://helloiampau.echotestserver.jit.su/', checkChannel);
+		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', checkChannel);
 	});
 	
 	it('Should be able to send messages', function(done) {
 		var sendMessage = function() {
 			thisChannel.send('cacca');
+			thisChannel.wrappedChannel.close();
 			done();
 		}
 		thisChannel.should.have.property('send');
-		thisChannel.connectByName('http://helloiampau.echotestserver.jit.su/', sendMessage);
+		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', sendMessage);
 	});
 	
 
@@ -59,17 +60,19 @@ describe('Channel:\n', function(){
 	it('Should be able to add callbacks', function(done){ 
 		var onReplyReceived = function(reply) {
 			assert(reply==='caccabody');
+			thisChannel.wrappedChannel.close();			
 			done();
 		}
 		var sendMessage = function() {
 			thisChannel.send(new p2pPacket('cacca', 'caccabody'));			
 		}
 		thisChannel.on('cacca', onReplyReceived);
-		thisChannel.connectByName('http://helloiampau.echotestserver.jit.su/', sendMessage);
+		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', sendMessage);
 	});
 
 	it('Should be able to set a socket', function(done) {
 		var testNewSocket = function(reply) {
+			thisChannel.wrappedChannel.close();			
 			done();
 		}	
 
@@ -79,8 +82,8 @@ describe('Channel:\n', function(){
 			thisChannel.send(new p2pPacket('test', 'cacca'));	
 		}
 
-		var newSocket = io.connect('http://helloiampau.echotestserver.jit.su/');
-		newSocket.on('connect', onConnect);
+		var newSocket = new WebSocket('ws://helloiampau.echotestserver.jit.su/');
+		newSocket.onopen = onConnect;
 	});
 	
 });
