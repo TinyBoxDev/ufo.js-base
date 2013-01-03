@@ -53,6 +53,7 @@ describe('BSPeer:\n', function(){
     it('Should accept a peering request if pool is not full', function(done) {
 	
 	var checkPeeringReply = function(data) {
+	    data = JSON.parse(data);
 	    data.should.have.property('type');
 	    assert(data.type == 'peeringReply');
 	    data.body.should.have.property('answer');
@@ -72,6 +73,7 @@ describe('BSPeer:\n', function(){
     it('Should broadcast a peering request if pool is full', function(done) {
 
 	var checkPeeringReply = function(data) {
+	    data = JSON.parse(data);	    
 	    data.should.have.property('type');
 	    assert(data.type == 'peeringReply');
 	    data.body.should.have.property('answer');
