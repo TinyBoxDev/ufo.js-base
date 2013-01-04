@@ -22,7 +22,8 @@ describe('BSPeer:\n', function(){
     });
 	
     beforeEach(function(done) {
-	done();
+    	thisBSPeer.pool = new connectionPool();
+		done();
     });
 
     afterEach(function(done) {
@@ -72,14 +73,13 @@ describe('BSPeer:\n', function(){
 		testClient.on('open', sendPeeringRequest);
 		testClient.on('message', checkPeeringReply);
     });
-
-	/*
+    
     it('Should broadcast a peering request if pool is full', function(done) {
-		var checkPeeringReply = function(data) {
+		var checkPeering = function(data) {
 	    	data = JSON.parse(data);	    
 	    	data.should.have.property('type');
-	    	if(data.type == 'peeringReply') {
-				data.body.should.have.property('answer');
+	    	if(data.type == 'peering') {
+				data.body.should.have.property('offer');
 				done();
 	    	}
 		}
@@ -90,10 +90,20 @@ describe('BSPeer:\n', function(){
 	    	testClient.send(pkt.toString());
 		}
 
-		var testClient = new WebSocket('ws://0.0.0.0:8080');
+		var testClient = new WebSocket('ws://0.0.0.0:5000');
+		var conn1 = new WebSocket('ws://0.0.0.0:5000');
+		var conn2 = new WebSocket('ws://0.0.0.0:5000');
+		var conn3 = new WebSocket('ws://0.0.0.0:5000');
+		var conn4 = new WebSocket('ws://0.0.0.0:5000');
+		conn1.on('message', checkPeering);
+		conn2.on('message', checkPeering);
+		conn3.on('message', checkPeering);
+		conn4.on('message', checkPeering);
+		thisBSPeer.pool.pushConnection('conn1', conn1);
+		thisBSPeer.pool.pushConnection('conn2', conn2);
+		thisBSPeer.pool.pushConnection('conn3', conn3);
+		thisBSPeer.pool.pushConnection('conn4', conn4);
 		testClient.on('open', sendPeeringRequest);
-		testClient.on('message', checkPeeringReply);
 	});
-	*/
     
 });
