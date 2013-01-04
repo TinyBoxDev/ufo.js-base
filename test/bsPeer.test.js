@@ -9,7 +9,7 @@ var p2pPacket = require('../lib/p2pPacket').p2pPacket;
 describe('BSPeer:\n', function(){
 	//this.timeout(35000);
 	var thisBSPeer = null;
-	var server = http.createServer().listen(8080);
+	var server = http.createServer().listen(5000);
 	
     before(function(done) {
 	thisBSPeer = BSPeer.bspeer;
@@ -46,7 +46,7 @@ describe('BSPeer:\n', function(){
 	    done();
 	}
 	
-	var testClient = new WebSocket('ws://0.0.0.0:8080');
+	var testClient = new WebSocket('ws://0.0.0.0:5000');
 	testClient.on('open', onConnectionPerformed);
     });
 
@@ -68,7 +68,7 @@ describe('BSPeer:\n', function(){
 	    	testClient.send(pkt.toString());
 		}
 
-		var testClient = new WebSocket('ws://0.0.0.0:8080');
+		var testClient = new WebSocket('ws://0.0.0.0:5000');
 		testClient.on('open', sendPeeringRequest);
 		testClient.on('message', checkPeeringReply);
     });
