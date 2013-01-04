@@ -59,7 +59,8 @@ describe('Channel:\n', function(){
 
 	it('Should be able to add callbacks', function(done){ 
 		var onReplyReceived = function(reply) {
-			assert(reply==='caccabody');
+			console.log(reply);
+			assert(reply.body==='caccabody');
 			thisChannel.wrappedChannel.close();			
 			done();
 		}

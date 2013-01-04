@@ -19,8 +19,8 @@ describe('Client:\n', function() {
 	});
 	
 	it('Should have a peer array', function(done) {
-		client.should.have.property('connectionPool');
-		assert(client.connectionPool instanceof Array);
+		client.should.have.property('pool');
+		assert(client.pool instanceof connectionPool);
 		done();
     	});
 

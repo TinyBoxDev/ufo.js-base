@@ -37,8 +37,8 @@ describe('Peer:\n', function(){
 
 	it('Should send a request to search a new peer', function(done) {
 		var checkPacket = function(reply) {
-			reply.should.have.property('offer');
-			assert(reply.offer!=null);
+			reply.body.should.have.property('offer');
+			assert(reply.body.offer!=null);
 			done();
 		}	
 		var onBootstrap = function() {
@@ -51,7 +51,7 @@ describe('Peer:\n', function(){
 
 	it('Should take an answer and perform connection', function(done) {
 		var onOffer = function(pkt) {
-			pc.setRemoteDescription(pkt.offer, prepareAnswer, function(){});
+			pc.setRemoteDescription(pkt.body.offer, prepareAnswer, function(){});
 		}
 		var prepareAnswer = function() {
 			pc.createAnswer(sendAnswer, function(){});
@@ -95,7 +95,7 @@ describe('Peer:\n', function(){
 
 	it('Should send peering reply', function(done) {
 		var onPeeringReply = function(reply) {
-			assert(reply.answer == 'cacca');
+			assert(reply.body.answer == 'cacca');
 			done();
 		}
 

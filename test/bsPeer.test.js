@@ -52,44 +52,48 @@ describe('BSPeer:\n', function(){
 
     it('Should accept a peering request if pool is not full', function(done) {
 	
-	var checkPeeringReply = function(data) {
-	    data = JSON.parse(data);
-	    data.should.have.property('type');
-	    if(data.type == 'peeringReply') {
-		data.body.should.have.property('answer');
-		assert(data.body.answer == null);
-		done();
-	    }
-	}
+		var checkPeeringReply = function(data) {
+	    	data = JSON.parse(data);
+	    	data.should.have.property('type');
+	    	if(data.type == 'peeringReply') {
+				data.body.should.have.property('answer');
+				assert(data.body.answer == null);
+				done();
+			}
+		}
+		
+		var sendPeeringRequest = function() {
+			var pkt = new p2pPacket('peering', 'test request');
+			pkt.addIDToPath('cacca');
+	    	testClient.send(pkt.toString());
+		}
 
-	var sendPeeringRequest = function() {
-	    testClient.send(new p2pPacket('peering', 'test request').toString());
-	}
-
-	var testClient = new WebSocket('ws://0.0.0.0:8080');
-	testClient.on('open', sendPeeringRequest);
-	testClient.on('message', checkPeeringReply);
+		var testClient = new WebSocket('ws://0.0.0.0:8080');
+		testClient.on('open', sendPeeringRequest);
+		testClient.on('message', checkPeeringReply);
     });
 
+	/*
     it('Should broadcast a peering request if pool is full', function(done) {
+		var checkPeeringReply = function(data) {
+	    	data = JSON.parse(data);	    
+	    	data.should.have.property('type');
+	    	if(data.type == 'peeringReply') {
+				data.body.should.have.property('answer');
+				done();
+	    	}
+		}
 
-	var checkPeeringReply = function(data) {
-	    data = JSON.parse(data);	    
-	    data.should.have.property('type');
-	    if(data.type == 'peeringReply') {
-		data.body.should.have.property('answer');
-		done();
-	    }
-	}
+		var sendPeeringRequest = function() {
+			var pkt = new p2pPacket('peering', 'test request');
+			pkt.addIDToPath('cacca');
+	    	testClient.send(pkt.toString());
+		}
 
-	var sendPeeringRequest = function() {
-	    testClient.send(new p2pPacket('peering', 'test request').toString());
-	}
-
-	var testClient = new WebSocket('ws://0.0.0.0:8080');
-	testClient.on('open', sendPeeringRequest);
-	testClient.on('message', checkPeeringReply)
-	
-    });
+		var testClient = new WebSocket('ws://0.0.0.0:8080');
+		testClient.on('open', sendPeeringRequest);
+		testClient.on('message', checkPeeringReply);
+	});
+	*/
     
 });

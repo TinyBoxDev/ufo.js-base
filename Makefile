@@ -17,6 +17,7 @@ testweb:   compile
 	$(BROWSER) ./testweb/runner.html
 
 clean:
+	rm -rf ./node_modules
 	rm public/js/client.min.js
 
 .PHONY: compile test testweb

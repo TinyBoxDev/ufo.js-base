@@ -84,6 +84,17 @@ describe('Connection Pool:\n', function() {
 	done();
     });
 
+	it('Should return false if a connection doesn\'t exist', function(done) {
+		assert(false === thisConnectionPool.exists('cacca'));
+		done();
+	});
+	
+	it('Should return true if a connection exists', function(done) {
+		thisConnectionPool.pushConnection('cacca', 'caccaConnection');
+		assert(true === thisConnectionPool.exists('cacca'));
+		done();
+	});
+
     
 
 });
