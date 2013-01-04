@@ -31,6 +31,11 @@ describe('P2P Packet:\n', function(){
 		thisP2pPacket.should.have.property('body');
 		done();
 	});
+	
+	it('Should have a originator field', function(done) {
+		thisP2pPacket.should.have.property('originator');
+		done();
+	});
 
 	it('Should initialize the fields', function(done) {
 		var anotherPacket = new p2pPacket('caccaType', 'caccaBody');
