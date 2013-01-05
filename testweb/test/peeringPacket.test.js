@@ -14,7 +14,7 @@ describe('Peering Packet:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisPeeringPacket = new peeringPacket(null);
+		thisPeeringPacket = new peeringPacket(null, null);
 		done();
 	});
 
@@ -30,6 +30,11 @@ describe('Peering Packet:\n', function(){
 	it('Should initialize the offer field', function(done) {
 		var anotherPacket = new peeringPacket('cacca');
 		anotherPacket.offer.should.eql('cacca');
+		done();
+	});
+	
+	it('Should have a originator field', function(done) {
+		thisPeeringPacket.should.have.property('originator');
 		done();
 	});
 });
