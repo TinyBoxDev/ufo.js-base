@@ -2,3 +2,4 @@
 - Ogni nodo inoltra una richiesta di peering a tutti i nodi ad esso connessi cui non ha precedentemente inviato quella richiesta; per indentificare i nodi cui non ha spedito, controlla il path del pacchetto e scarta tutti i nodi successivi ad ogni sua occorrenza nel path.
 - Ogni nodo spedisce una risposta ricreando lo shortest path a partire dal nodo precedente alla sua prima occorrenza nel path, ingorando i nodi nel mezzo.
 - Il BSS gestisce un numero di connessioni maggiore di uno rispetto al numero di connessioni gestite dai client.
+- Ogni nodo inoltra un pacchetto ricevuto verso un nodo diverso da quello dal quale non ha ricevuto il pacchetto.
