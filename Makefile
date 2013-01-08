@@ -20,5 +20,6 @@ testweb:   compile_test
 clean:
 	rm -rf ./node_modules
 	rm public/js/client.min.js
+	rm lib/client.bundle.js 
 
 .PHONY: compile test testweb
