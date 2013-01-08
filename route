@@ -1,5 +1,16 @@
+Metodologie di routing
+
+1. Richieste di peering
+1.1 Un nodo con meno di 4 connessioni nel pool accetta sempre una richiesta di peering.
+1.2 Un nodo con 4 connessioni nel pool inoltra una richiesta di peering ad un vicino che non sia presente nel path della richiesta. Qualora fossero presenti tutti i nodi vicini nella richiesta, il nodo inoltra la richiesta al nodo vicino dal quale la ha ricevuta.
+
+2. Richieste di densify
+2.1 Un nodo accetta una richiesta di densify solo nel caso in cui questa lasci libera almeno una connessione nel pool.
+
+[…]
+
 - Il densify deve lasciare almeno un posto libero nel pool.
-- Ogni nodo inoltra una richiesta di peering a tutti i nodi ad esso connessi cui non ha precedentemente inviato quella richiesta; per indentificare i nodi cui non ha spedito, controlla il path del pacchetto e scarta tutti i nodi successivi ad ogni sua occorrenza nel path.
+- Ogni nodo inoltra una richiesta di peering a tutti i nodi ad esso connessi cui non ha precedentemente inviato quella richiesta; per identificare i nodi cui non ha spedito, controlla il path del pacchetto e scarta tutti i nodi successivi ad ogni sua occorrenza nel path.
 - Ogni nodo spedisce una risposta ricreando lo shortest path a partire dal nodo precedente alla sua prima occorrenza nel path, ingorando i nodi nel mezzo.
 - Il BSS gestisce un numero di connessioni maggiore di uno rispetto al numero di connessioni gestite dai client.
 - Ogni nodo inoltra un pacchetto ricevuto verso un nodo diverso da quello dal quale non ha ricevuto il pacchetto.
