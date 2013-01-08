@@ -11,6 +11,7 @@ describe('Client:\n', function() {
 	});
 	
 	beforeEach(function(done) {
+		client.pool = new connectionPool();
 		done();
 	});
 
@@ -38,6 +39,43 @@ describe('Client:\n', function() {
 		client.onPeerFound = done;
 
 		client.bootstrap();
+	});
+
+	it('Should accept a new connection if pool has a slot', function(done) {
+		client.should.have.property('onPeering');
+
+		var callingPeer = {
+			send : function(pkt) {
+				pc.setRemoteDescription(pkt.body.answer, connect, function(error) { console.log(error); });	
+			}
+		}
+
+		var connect = function() {
+			pc.connectDataConnection(5000,5001);
+		}
+
+		var onFakeStreamDone = function(stream) {
+			pc.addStream(stream);
+			pc.createOffer(onOfferCreated, function(error) { console.log(error); });
+		}
+
+		var onOfferCreated = function(offer) {
+			pc.setLocalDescription(offer);
+			var pkt = new p2pPacket('peering', new peeringPacket(offer, 'testOriginator'));
+			pkt.addIDToPath('bss');
+			client.onPeering(pkt, callingPeer);
+		}
+
+		var pc = new mozRTCPeerConnection();
+		pc.onconnection = function() {
+			setTimeout(function() {
+				assert(client.pool.testOriginator != undefined);
+				pc.close();
+				done();
+			}, 1000);
+		}
+		navigator.mozGetUserMedia({audio:true, fake:true}, onFakeStreamDone, function(error) { console.log(error); });
+			
 	});
 	
 });
