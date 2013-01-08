@@ -43,15 +43,18 @@ describe('Client:\n', function() {
 
 	it('Should accept a new connection if pool has a slot', function(done) {
 		client.should.have.property('onPeering');
-
+		
+		var remotePort = null;
+		
 		var callingPeer = {
 			send : function(pkt) {
+				remotePort = pkt.body.port;
 				pc.setRemoteDescription(pkt.body.answer, connect, function(error) { console.log(error); });	
 			}
 		}
 
 		var connect = function() {
-			pc.connectDataConnection(5000,5001);
+			pc.connectDataConnection(5000, remotePort);
 		}
 
 		var onFakeStreamDone = function(stream) {
@@ -61,7 +64,7 @@ describe('Client:\n', function() {
 
 		var onOfferCreated = function(offer) {
 			pc.setLocalDescription(offer);
-			var pkt = new p2pPacket('peering', new peeringPacket(offer, 'testOriginator'));
+			var pkt = new p2pPacket('peering', new peeringPacket(offer, 'testOriginator', 5000));
 			pkt.addIDToPath('bss');
 			client.onPeering(pkt, callingPeer);
 		}

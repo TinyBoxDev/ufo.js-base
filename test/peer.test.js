@@ -50,7 +50,10 @@ describe('Peer:\n', function(){
 	});
 
 	it('Should take an answer and perform connection', function(done) {
+		var remotePort = null;
 		var onOffer = function(pkt) {
+			console.log(pkt.body.port);
+			remotePort = pkt.body.port;
 			pc.setRemoteDescription(pkt.body.offer, prepareAnswer, function(){});
 		}
 		var prepareAnswer = function() {
@@ -58,9 +61,9 @@ describe('Peer:\n', function(){
 		}
 		var sendAnswer = function(answer) {
 			pc.setLocalDescription(answer);
-			thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(answer)));
+			thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(answer, 'org', 5001)));
 			setTimeout(function() {
-				pc.connectDataConnection(5001,5000);
+				pc.connectDataConnection(5001,remotePort);
 			}, 2000);
 
 		}
