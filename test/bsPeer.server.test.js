@@ -74,10 +74,6 @@ describe('BSPeer:\n', function(){
 		testClient.on('message', checkPeeringReply);
     });
     
-    it('Should fetch the correct interface list for forwarding', function(done) {
-		done();
-	});
-    
     it('Should broadcast a peering request if pool is full', function(done) {
 		var conn1 = new WebSocket('ws://0.0.0.0:5000');
 		conn1.on('message', function(data) {
