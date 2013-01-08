@@ -40,7 +40,7 @@ describe('Client:\n', function() {
 
 		client.bootstrap();
 	});
-
+	
 	it('Should accept a new connection if pool has a slot', function(done) {
 		client.should.have.property('onPeering');
 		

@@ -48,11 +48,11 @@ describe('Peer:\n', function(){
 
 		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);
 	});
-
+	
+	
 	it('Should take an answer and perform connection', function(done) {
 		var remotePort = null;
 		var onOffer = function(pkt) {
-			console.log(pkt.body.port);
 			remotePort = pkt.body.port;
 			pc.setRemoteDescription(pkt.body.offer, prepareAnswer, function(){});
 		}
@@ -79,10 +79,12 @@ describe('Peer:\n', function(){
 		}
 		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);		
 	});
-
+	
+	
 	it('Should prepare an answer and perform a connection', function(done) {
 		
 		var onOffer = function(offerPkt) {
+			console.log(offerPkt.body.port);
 			thisPeer.createSocketForPeer(offerPkt, secondPeer, function() { 
 				thisPeer.peerConnection.close();
 				done();
