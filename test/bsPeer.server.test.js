@@ -77,68 +77,68 @@ describe('BSPeer:\n', function(){
     it('Should broadcast a peering request if pool is full', function(done) {
 		var conn1 = new WebSocket('ws://0.0.0.0:5000');
 		conn1.on('message', function(data) {
-			console.log('con1 : ' + data);			
+			//console.log('con1 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer1', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn1.send(pkt.toString());
+				//console.log(pkt);
+	    		conn1.send(pkt.toString());
 			}
 			else if(data.type === 'peering') {
-				console.log('received peering packet');
+				//console.log('received peering packet');
 				done();
 			}
 		});
 
 		var conn2 = new WebSocket('ws://0.0.0.0:5000');
 		conn2.on('message', function(data) {
-			console.log('con2 : ' + data);			
+			//console.log('con2 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer2', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn2.send(pkt.toString());
+				//console.log(pkt);
+	    		conn2.send(pkt.toString());
 			}
 			else if(data.type === 'peering') {
-				console.log('received peering packet');
+				//console.log('received peering packet');
 				done();
 			}
 		});
 
 		var conn3 = new WebSocket('ws://0.0.0.0:5000');
 		conn3.on('message', function(data) {
-			console.log('con3 : ' + data);			
+			//console.log('con3 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer3', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn3.send(pkt.toString());
+				//console.log(pkt);
+	    		conn3.send(pkt.toString());
 			}
 			else if(data.type === 'peering') {
-				console.log('received peering packet');
+				//console.log('received peering packet');
 				done();
 			}
 		});
 
 		var conn4 = new WebSocket('ws://0.0.0.0:5000');
 		conn4.on('message', function(data) {
-			console.log('con4 : ' + data);			
+			//console.log('con4 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer4', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn4.send(pkt.toString());
+				//console.log(pkt);
+	    		conn4.send(pkt.toString());
 			}
 			else if(data.type === 'peering') {
-				console.log('received peering packet');
+				//console.log('received peering packet');
 				done();
 			}
 
@@ -147,17 +147,17 @@ describe('BSPeer:\n', function(){
 
 		var outOfSpace = new WebSocket('ws://0.0.0.0:5000');
 		outOfSpace.on('message', function(data) {
-			console.log('outOfSpace : ' + data);			
+			//console.log('outOfSpace : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('outOfSpace', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			outOfSpace.send(pkt.toString());
+				//console.log(pkt);
+	    		outOfSpace.send(pkt.toString());
 			}
 			else if(data.type === 'peering') {
-				console.log('received peering packet');
+				//console.log('received peering packet');
 				done();
 			}
 
@@ -169,70 +169,70 @@ describe('BSPeer:\n', function(){
 	    var injectedPath = [];	
 	    var conn1 = new WebSocket('ws://0.0.0.0:5000');
 		conn1.on('message', function(data) {
-			console.log('con1 : ' + data);			
+			//console.log('con1 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer1', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn1.send(pkt.toString());
+				//console.log(pkt);
+    			conn1.send(pkt.toString());
 			}
-			else if(data.type === 'peering') {
-				console.log('received peering packet');
-			}
+			//else if(data.type === 'peering') {
+			//	console.log('received peering packet');
+			//}
 		});
 
 		var conn2 = new WebSocket('ws://0.0.0.0:5000');
 		conn2.on('message', function(data) {
-			console.log('con2 : ' + data);			
+			//console.log('con2 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);				
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer2', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn2.send(pkt.toString());
+				//console.log(pkt);
+	    		conn2.send(pkt.toString());
 			}
 			else if(data.type === 'peering') {
-				console.log('received peering packet');
+				//console.log('received peering packet');
 			}
 		});
 
 		var conn3 = new WebSocket('ws://0.0.0.0:5000');
 		conn3.on('message', function(data) {
-			console.log('con3 : ' + data);			
+			//console.log('con3 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);				
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer3', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn3.send(pkt.toString());
+				//console.log(pkt);
+	    		conn3.send(pkt.toString());
 			}
-			else if(data.type === 'peering') {
-				console.log('received peering packet');
-			}
+			//else if(data.type === 'peering') {
+			//	console.log('received peering packet');
+			//}
 		});
 
 		var conn4 = new WebSocket('ws://0.0.0.0:5000');
 		conn4.on('message', function(data) {
-			console.log('con4 : ' + data);			
+			//console.log('con4 : ' + data);			
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);				
-				console.log('sending peering');
+				//console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket('offer4', data.body.id));
 				pkt.addIDToPath(data.body.id);
-				console.log(pkt);
-	    			conn4.send(pkt.toString());
+				//console.log(pkt);
+	    		conn4.send(pkt.toString());
 			}
-			else if(data.type === 'peering') {
-				console.log('received peering packet');
-			}
+			//else if(data.type === 'peering') {
+			//	console.log('received peering packet');
+			//}
 
 		});
 
@@ -240,19 +240,19 @@ describe('BSPeer:\n', function(){
 		setTimeout(function() {
 			var outOfSpace = new WebSocket('ws://0.0.0.0:5000');
 			outOfSpace.on('message', function(data) {
-				console.log('outOfSpace : ' + data);			
+				//console.log('outOfSpace : ' + data);			
 				data = JSON.parse(data);
 				if(data.type === 'setId') {
 					injectedPath.push(data.body.id);				
-					console.log('sending peering');
+					//console.log('sending peering');
 					var pkt = new p2pPacket('peering', new peeringPacket('outOfSpace', data.body.id));
 					pkt.path = injectedPath;
-					console.log(pkt);
-	    				outOfSpace.send(pkt.toString());
+					//console.log(pkt);
+	    			outOfSpace.send(pkt.toString());
 				}
-				else if(data.type === 'peering') {
-					console.log('received peering packet');
-				}
+				//else if(data.type === 'peering') {
+				//	console.log('received peering packet');
+				//}
 	
 			});
 		}, 4000);

@@ -11,7 +11,7 @@ compile:
 	rm lib/client.bundle.js
 
 test:	compile
-	NODE_PATH="./lib/" ./node_modules/.bin/mocha --reporter nyan test/*.server.*
+	NODE_PATH="./lib/" ./node_modules/.bin/mocha --reporter spec test/*.server.*
 	
 testweb:   compile
 	$(BROWSER) ./testweb/runner.html &
