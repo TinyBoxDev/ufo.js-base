@@ -1,7 +1,7 @@
 all:	compile test testweb
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
-	BROWSER := open
+	BROWSER := /Applications/FirefoxNightly.app/Contents/MacOS/firefox
 endif
 
 compile:
@@ -14,7 +14,7 @@ test:	compile
 	NODE_PATH="./lib/" ./node_modules/.bin/mocha --reporter nyan test/*.server.*
 	
 testweb:   compile
-	$(BROWSER) ./testweb/runner.html
+	$(BROWSER) ./testweb/runner.html &
 
 clean:
 	rm -rf ./node_modules
