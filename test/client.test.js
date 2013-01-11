@@ -12,6 +12,7 @@ describe('Client:\n', function() {
 	
 	beforeEach(function(done) {
 		client.pool = new connectionPool();
+		client.id = null;
 		done();
 	});
 

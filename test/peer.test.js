@@ -51,6 +51,7 @@ describe('Peer:\n', function(){
 	
 	
 	it('Should take an answer and perform connection', function(done) {
+		client.id = 'molle';
 		var remotePort = null;
 
 		var candidatesArray = [];
@@ -105,6 +106,7 @@ describe('Peer:\n', function(){
 	
 	
 	it('Should prepare an answer and perform a connection', function(done) {
+		client.id = 'cacca';
 		
 		var onOffer = function(offerPkt) {
 			thisPeer.createSocketForPeer(offerPkt, secondPeer, function() { 

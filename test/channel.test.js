@@ -22,7 +22,6 @@ describe('Channel:\n', function(){
 	afterEach(function(done){
 		done();
 	});
-	
 	it('Should have a wrapped channel', function(done) {
 		thisChannel.should.have.property('wrappedChannel');
 		done();
@@ -37,17 +36,6 @@ describe('Channel:\n', function(){
 		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', checkChannel);
 	});
 	
-	it('Should be able to send messages', function(done) {
-		var sendMessage = function() {
-			thisChannel.send(new p2pPacket('cacca', 'cacca'));
-			thisChannel.wrappedChannel.close();
-			done();
-		}
-		thisChannel.should.have.property('send');
-		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', sendMessage);
-	});
-	
-
 	it('Should throw an exception if user tries to send a message before he connects', function(done) {
 		try {
 			thisChannel.send('cacca');
@@ -57,35 +45,35 @@ describe('Channel:\n', function(){
 		}
 	});
 
-//	it('Should be able to add callbacks', function(done){ 
-//		var onReplyReceived = function(reply) {
-//			console.log(reply);
-//			assert(reply.body==='caccabody');
-//			thisChannel.wrappedChannel.close();			
-//			done();
-//		}
-//		var sendMessage = function() {
-//			console.log(new p2pPacket('cacca', 'caccabody'));
-//			thisChannel.send(new p2pPacket('cacca', 'caccabody'));			
-//		}
-//		thisChannel.on('cacca', onReplyReceived);
-//		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', sendMessage);
-//	});
+	it('Should be able to send a message and add callbacks', function(done){ 
+		var onReplyReceived = function(reply) {
+			console.log(reply);
+			assert(reply.body==='caccabody');
+			thisChannel.wrappedChannel.close();			
+			done();
+		}
+		var sendMessage = function() {
+			console.log(new p2pPacket('cacca', 'caccabody'));
+			thisChannel.send(new p2pPacket('cacca', 'caccabody'));			
+		}
+		thisChannel.on('cacca', onReplyReceived);
+		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', sendMessage);
+	});
 
-//	it('Should be able to set a socket', function(done) {
-//		var testNewSocket = function(reply) {
-//			thisChannel.wrappedChannel.close();			
-//			done();
-//		}	
-//
-//		var onConnect = function() {
-//			thisChannel.connectViaSocket(newSocket);
-//			thisChannel.on('test', testNewSocket);
-//			thisChannel.send(new p2pPacket('test', 'cacca'));	
-//		}
-//
-//		var newSocket = new WebSocket('ws://helloiampau.echotestserver.jit.su/');
-//		newSocket.onopen = onConnect;
-//	});
+	it('Should be able to set a socket', function(done) {
+		var testNewSocket = function(reply) {
+			thisChannel.wrappedChannel.close();			
+			done();
+		}	
+
+		var onConnect = function() {
+			thisChannel.connectViaSocket(newSocket);
+			thisChannel.on('test', testNewSocket);
+			thisChannel.send(new p2pPacket('test', 'cacca'));	
+		}
+
+		var newSocket = new WebSocket('ws://helloiampau.echotestserver.jit.su/');
+		newSocket.onopen = onConnect;
+	});
 	
 });
