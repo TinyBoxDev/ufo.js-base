@@ -26,14 +26,27 @@
   <div class="container">
 
 	<script>
+		var console = {
+			//panel: $('#cacca'),
+			log: function(msg) {
+				$('#consoleLogPanel').append('<div>' + msg + '</div>');
+			},
+			error : function(mgs) {
+				$('#consoleErrPanel').append('<div>' + msg + '</div>');
+			},
+			warn : function(msg) {
+				$('#consoleWarnPanel').append('<div>' + msg + '</div>');
+			}
+		};
+		
 		var runClient = function() {
+			console.log('Client is contacting server.');
 			$('#bootstrapBtn').addClass('disabled');
 			client.onPeerFound = function() {
-				$('#bootstrapRow').remove();
-				$('#peersRow').toggle();
-		$('#clientid').html("Well done! Your id is " + client.id);
+				//$('#bootstrapRow').remove();
+				console.log('Assigned ID is ' + client.id);
 			}
-			client.bootstrap();		
+			client.bootstrap();
 		}
 
 	</script>
@@ -47,11 +60,19 @@
 			<button class="btn btn-large btn-warning" type="button" id="bootstrapBtn" onClick="runClient();">Bootstrap</button>
 		</div>
 	</div>
-	<div class="row" id="peersRow" style="display: none;">
-	  <div class ="span6 offset3" align="center">
-		<h4>Peers informations!</h4>
-		<p id="clientid"></p>
-	  </div>
+	
+	<hr>
+	
+	<div class="row">
+		<div class='span4'>
+			<div id='consoleLogPanel' class='alert alert-info' style='font-size : 12px;'><p align='center'>Status</p><hr></div>
+		</div>
+		<div class='span4'>
+			<div id='consoleWarnPanel' class='alert alert-warning' style='font-size : 12px;'><p align='center'>Warnings</p><hr></div>
+		</div>
+		<div class='span4'>
+			<div id='consoleErrPanel' class='alert alert-error' style='font-size : 12px;'><p align='center'>Errors</p><hr></div>
+		</div>
 	</div>
 		
   </div>
