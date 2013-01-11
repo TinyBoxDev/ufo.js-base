@@ -24,4 +24,3 @@ public/js/client.min.js
 *.esproj
 nohup.out
 
-lib/client.bundle.js 
