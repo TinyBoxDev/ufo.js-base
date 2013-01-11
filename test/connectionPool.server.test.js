@@ -19,7 +19,7 @@ describe('Connection Pool:\n', function() {
     afterEach(function(done) {
 		done();
     });
-
+    
     it('Should have usedConnections field', function(done) {
 		thisConnectionPool.should.have.property('usedConnections');
 		done();

@@ -1,7 +1,7 @@
 all:	compile test testweb
 UNAME := $(shell uname)
 ifeq ($(UNAME), Darwin)
-	BROWSER := /Applications/FirefoxNightly.app/Contents/MacOS/firefox
+	BROWSER := /Applications/Google\ Chrome\ Canary.app/Contents/MacOS/Google\ Chrome\ Canary
 endif
 
 compile_test:
