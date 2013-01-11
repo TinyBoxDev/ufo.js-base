@@ -14,7 +14,7 @@ describe('Peering Packet:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisPeeringPacket = new peeringPacket(null, null);
+		thisPeeringPacket = new peeringPacket(null, null, null, null);
 		done();
 	});
 

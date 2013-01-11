@@ -3,7 +3,7 @@
 */
 
 describe('Peer:\n', function(){
-	this.timeout(15000);
+	this.timeout(30000);
 	var thisPeer = null;
 	
 	before(function(done){
@@ -52,30 +52,53 @@ describe('Peer:\n', function(){
 	
 	it('Should take an answer and perform connection', function(done) {
 		var remotePort = null;
+
+		var candidatesArray = [];
+
 		var onOffer = function(pkt) {
+			console.log(pkt.body);
 			remotePort = pkt.body.port;
-			pc.setRemoteDescription(pkt.body.offer, prepareAnswer, function(){});
-		}
-		var prepareAnswer = function() {
-			pc.createAnswer(sendAnswer, function(){});
-		}
-		var sendAnswer = function(answer) {
-			pc.setLocalDescription(answer);
-			thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(answer, 'org', 5001)));
-			setTimeout(function() {
-				pc.connectDataConnection(5001,remotePort);
-			}, 2000);
+			
+			var descriptor = new RTCSessionDescription(pkt.body.offer);
+
+			pc.setRemoteDescription(descriptor, function() { setRemoteStuffs(pkt); }, function(error) { console.log(error); });
 
 		}
+
+		var setRemoteStuffs = function(pkt) {
+			pkt.body.candidates.forEach(function(candidate){
+				console.log(candidate);
+				pc.addIceCandidate(new RTCIceCandidate(candidate));
+  			});
+			
+			pc.createAnswer(onAnswer, function(){});
+			
+		}
 		
-		var pc = new mozRTCPeerConnection();		
-		var onBootstrap = function() {
-			pc.onconnection = function() {
-				pc.close();
-				done();
+		var onAnswer = function(answer) {
+			console.log('sendAnswer');			
+			pc.setLocalDescription(answer);
+		}
+		
+		var pc = new webkitRTCPeerConnection( null, { optional: [ { RtpDataChannels: true } ] });
+		var dc = null;
+		pc.ondatachannel = function(event) {
+			dc = event.channel;
+			dc.onopen = function() { 
+				console.log('open')				
+		       	};	
+		}
+
+		pc.onicecandidate = function(event) {	
+			if (event.candidate) {
+				candidatesArray.push(event.candidate);
+				if (candidatesArray.length == 2)
+					thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(pc.localDescription, candidatesArray, client.id, self.localPort)));
 			}
+		}
+		var onBootstrap = function() {
 			thisPeer.channel.on('peering', onOffer);
-			thisPeer.lookForAPeer();
+			thisPeer.lookForAPeer(function() { pc.close(); done(); } );
 		}
 		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);		
 	});
@@ -84,16 +107,14 @@ describe('Peer:\n', function(){
 	it('Should prepare an answer and perform a connection', function(done) {
 		
 		var onOffer = function(offerPkt) {
-			console.log(offerPkt.body.port);
 			thisPeer.createSocketForPeer(offerPkt, secondPeer, function() { 
-				thisPeer.peerConnection.close();
 				done();
 			});
 		}
 
 		var onBootstrap = function() {
-			secondPeer.lookForAPeer();
-			secondPeer.channel.on('peering', onOffer);			
+			secondPeer.channel.on('peering', onOffer);						
+			secondPeer.lookForAPeer(function() { console.log('SecondPeer ends') });
 		}
 		var secondPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);
 	});
