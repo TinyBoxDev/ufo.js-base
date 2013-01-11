@@ -94,7 +94,7 @@ describe('Peer:\n', function(){
 			if (event.candidate) {
 				candidatesArray.push(event.candidate);
 				if (candidatesArray.length == 2)
-					thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(pc.localDescription, candidatesArray, client.id, self.localPort)));
+					thisPeer.channel.send(new p2pPacket('peeringReply', new peeringReplyPacket(pc.localDescription, candidatesArray, client.id, self.localPort), false));
 			}
 		}
 		var onBootstrap = function() {
@@ -128,28 +128,13 @@ describe('Peer:\n', function(){
 		
 		var onBootstrap = function() {
 			thisPeer.channel.on('peering', onPeering);
-			thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer')));
+			thisPeer.channel.send(new p2pPacket('peering', new peeringPacket('my offer'), false));
 		}
 
 		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/',  onBootstrap);
 
 	});
 
-	it('Should send peering reply', function(done) {
-		var onPeeringReply = function(reply) {
-			assert(reply.body.answer == 'cacca');
-			done();
-		}
-
-		var onBootstrap = function() {
-			thisPeer.channel.on('peeringReply', onPeeringReply);
-			thisPeer.sendPeeringReply('cacca');
-		}
-
-		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/',  onBootstrap);
-
-	});
-
-	
+		
 	
 });

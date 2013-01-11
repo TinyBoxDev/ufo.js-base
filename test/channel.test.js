@@ -53,8 +53,7 @@ describe('Channel:\n', function(){
 			done();
 		}
 		var sendMessage = function() {
-			console.log(new p2pPacket('cacca', 'caccabody'));
-			thisChannel.send(new p2pPacket('cacca', 'caccabody'));			
+			thisChannel.send(new p2pPacket('cacca', 'caccabody', false));			
 		}
 		thisChannel.on('cacca', onReplyReceived);
 		thisChannel.connectByName('ws://helloiampau.echotestserver.jit.su/', sendMessage);
@@ -69,7 +68,7 @@ describe('Channel:\n', function(){
 		var onConnect = function() {
 			thisChannel.connectViaSocket(newSocket);
 			thisChannel.on('test', testNewSocket);
-			thisChannel.send(new p2pPacket('test', 'cacca'));	
+			thisChannel.send(new p2pPacket('test', 'cacca', false));	
 		}
 
 		var newSocket = new WebSocket('ws://helloiampau.echotestserver.jit.su/');

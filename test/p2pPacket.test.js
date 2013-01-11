@@ -14,7 +14,7 @@ describe('P2P Packet:\n', function(){
 	});
 	
 	beforeEach(function(done){
-		thisP2pPacket = new p2pPacket(null, null);
+		thisP2pPacket = new p2pPacket(null, null, null);
 		done();
 	});
 

@@ -81,7 +81,7 @@ describe('Client:\n', function() {
 				candidatesArray.push(event.candidate);
 				if (candidatesArray.length == 4) {
 					var pkt = new p2pPacket('peering', 
-								new peeringPacket(pc.localDescription, candidatesArray, 'testOriginator', '9000'));
+								new peeringPacket(pc.localDescription, candidatesArray, 'testOriginator', '9000'), false);
 					pkt.addIDToPath('testOriginator');
 					client.onPeering(pkt, callingPeer);				
 				}
