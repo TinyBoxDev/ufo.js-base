@@ -27,7 +27,6 @@
 
 	<script>
 		var console = {
-			//panel: $('#cacca'),
 			log: function(msg) {
 				$('#consoleLogPanel').prepend('<p>' + msg + '</p>');
 				
@@ -40,20 +39,20 @@
 			}
 		};
 		
-		var sendMessage = function() {
-			var messageToSend = $('#cacca').val();
-			console.msg(messageToSend);
-			$('#messageBox').val('Burp here!');
-		}
-		
 		var runClient = function() {
 			console.log('Client is contacting server.');
-			$('#bootstrapBtn').addClass('disabled');
+			$('#bootstrapBtn').attr('disabled', 'disabled');
 			client.onPeerFound = function() {
 				//$('#bootstrapRow').remove();
 				console.log('Assigned ID is ' + client.id);
 			}
 			client.bootstrap();
+		}
+		
+		var sendMessage = function() {
+			var messageToSend = $('#messageBox').val();
+			console.msg(messageToSend);
+			$('#messageBox').val('Burp here!');
 		}
 
 	</script>
