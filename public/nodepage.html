@@ -43,7 +43,7 @@
 		var sendMessage = function() {
 			var messageToSend = $('#cacca').val();
 			console.msg(messageToSend);
-			$('#cacca').val('Burp here!');
+			$('#messageBox').val('Burp here!');
 		}
 		
 		var runClient = function() {
@@ -83,7 +83,7 @@
 		</div></div>
 		<div class='span4'>
 				<p>
-					<input id='cacca' type='text' value='Burp here!' name='messageBox' onfocus="this.value=''">
+					<input id='messageBox' type='text' value='Burp here!' name='messageBox' onfocus="this.value=''">
 				</p>
 				<p>
 					<button class="btn btn-large btn-success" type="button" id="sendMessage" onClick="sendMessage()">Send message</button>
