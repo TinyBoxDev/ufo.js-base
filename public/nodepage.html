@@ -49,14 +49,14 @@
 					var div = $('<div></div>');
 					
 					var printList = function(element, index, array) {
-						div.append('<input id="peer_' + index + '" type="checkbox">' + element + '<br>');
+						div.append('<label class="checkbox"><input id="peer_' + index + '" type="checkbox"> ' + element + '</label><br>');
 					}
 					;
 					client.pool.getIds().forEach(printList);
 					//client.pool.getIds().forEach(function(id) { div.append('<input id="' + id + '" type="checkbox">' + id + '<br>'); });
 					$('#peerList').html(div);
 				}
-				$('#peerList').html('<div><input id="peer_0" type="checkbox">' + client.pool.getIds()[0] + '<br></div>');
+				$('#peerList').html('<div><input id="peer_0" type="checkbox"> ' + client.pool.getIds()[0] + '<br></div>');
 				console.log('Assigned ID is ' + client.id);
 			}
 			client.bootstrap();
