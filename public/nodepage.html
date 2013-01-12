@@ -51,6 +51,7 @@
 		
 		var sendMessage = function() {
 			var messageToSend = $('#messageBox').val();
+			client.pool[0].send(new p2pPacket('echo', messageToSend, true));
 			console.msg(messageToSend);
 			$('#messageBox').val('Burp here!');
 		}
