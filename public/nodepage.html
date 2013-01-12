@@ -27,15 +27,15 @@
 
 	<script>
 		var console = {
-			log: function(msg) {
-				$('#consoleLogPanel').prepend('<p>' + msg + '</p>');
+			log: function(message) {
+				$('#consoleLogPanel').prepend('<p>' + message + '</p>');
 				
 			},
-			msg : function(msg) {
-				$('#consoleMessages').append('<p>Msg:' + msg + '</p>');
+			msg : function(message) {
+				$('#consoleMessages').append('<p>Msg:' + message + '</p>');
 			},
-			warn : function(msg) {
-				$('#consoleWarnPanel').append('<p>' + msg + '</p>');
+			warn : function(message) {
+				$('#consoleWarnPanel').append('<p>' + message + '</p>');
 			}
 		};
 		
