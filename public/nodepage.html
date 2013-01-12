@@ -44,6 +44,7 @@
 			$('#bootstrapBtn').attr('disabled', 'disabled');
 			client.onPeerFound = function() {
 				$('#myOwnID').html('<p>' + client.id + '</p>');
+				
 				client.pool.onPoolChanged = function() {
 					var div = $('<div></div>');
 					
@@ -55,6 +56,7 @@
 					//client.pool.getIds().forEach(function(id) { div.append('<input id="' + id + '" type="checkbox">' + id + '<br>'); });
 					$('#peerList').html(div);
 				}
+				$('#peerList').html('<div><input id="peer_0" type="checkbox">' + client.pool.getIds()[0] + '<br></div>');
 				console.log('Assigned ID is ' + client.id);
 			}
 			client.bootstrap();
