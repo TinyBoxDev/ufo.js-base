@@ -32,7 +32,7 @@
 				
 			},
 			msg : function(message) {
-				$('#consoleMessages').append('<p>Msg:' + message + '</p>');
+				$('#consoleMessages').append('<p>Msg: ' + message + '</p>');
 			},
 			warn : function(message) {
 				$('#consoleWarnPanel').append('<p>' + message + '</p>');
@@ -44,6 +44,10 @@
 			$('#bootstrapBtn').attr('disabled', 'disabled');
 			client.onPeerFound = function() {
 				//$('#bootstrapRow').remove();
+				$('#myOwnID').html('<p>' + client.id + '</p>');
+				client.pool.onPoolChanged = function() {
+					$('#peerList').html(JSON.stringify(client.pool));
+				}
 				console.log('Assigned ID is ' + client.id);
 			}
 			client.bootstrap();
@@ -51,7 +55,7 @@
 		
 		var sendMessage = function() {
 			var messageToSend = $('#messageBox').val();
-			client.pool[0].send(new p2pPacket('echo', messageToSend, true));
+			client.pool[client.pool[0]].send(new p2pPacket('echo', messageToSend, true));
 			console.msg(messageToSend);
 			$('#messageBox').val('Burp here!');
 		}
@@ -88,12 +92,21 @@
 				<p>
 					<button class="btn btn-large btn-success" type="button" id="sendMessage" onClick="sendMessage()">Send message</button>
 				</p>
+				<p id='peerList'>
+					
+				</p>
 		</div>
 		<!--
 		<div class='span4'>
 			<div id='consoleErrPanel' class='alert alert-error' style='font-size : 12px;'><p align='center'>Errors</p><hr></div>
 		</div>
 		-->
+	</div>
+	
+	<div class='row'>
+		<div class='span4'>
+		<div id='myOwnID' class='alert alert-error' style='overflow : scroll; font-size : 12px; height : 300px'>
+		</div>
 	</div>
 		
   </div>
