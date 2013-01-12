@@ -68,7 +68,6 @@
 				if ($('#peer_' + index).is(':checked')) {
 					client.pool[client.pool[index]].send(new p2pPacket('echo', messageToSend, true));
 					console.msg('Sent: ' + messageToSend);
-					$('#messageBox').val('Burp here!');
 				}
 			}
 		}
