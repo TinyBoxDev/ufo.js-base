@@ -32,7 +32,7 @@
 				
 			},
 			msg : function(message) {
-				$('#consoleMessages').append('<p>Msg: ' + message + '</p>');
+				$('#consoleMessages').append('<p>' + message + '</p>');
 			},
 			warn : function(message) {
 				$('#consoleWarnPanel').append('<p>' + message + '</p>');
@@ -67,7 +67,7 @@
 			for (var index = 0; index < 4; index++) {
 				if ($('#peer_' + index).is(':checked')) {
 					client.pool[client.pool[index]].send(new p2pPacket('echo', messageToSend, true));
-					console.msg(messageToSend);
+					console.msg('Sent: ' + messageToSend);
 					$('#messageBox').val('Burp here!');
 				}
 			}
