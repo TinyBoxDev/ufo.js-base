@@ -43,10 +43,13 @@
 			console.log('Client is contacting server.');
 			$('#bootstrapBtn').attr('disabled', 'disabled');
 			client.onPeerFound = function() {
-				//$('#bootstrapRow').remove();
 				$('#myOwnID').html('<p>' + client.id + '</p>');
 				client.pool.onPoolChanged = function() {
-					$('#peerList').html(JSON.stringify(client.pool));
+					var div = $('<div></div>');
+					client.pool.getIds.forEach(id) {
+						div.append(id);
+					}
+					$('#peerList').html(div);
 				}
 				console.log('Assigned ID is ' + client.id);
 			}
