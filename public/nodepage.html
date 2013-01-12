@@ -43,10 +43,11 @@
 			console.log('Client is contacting server.');
 			$('#bootstrapBtn').attr('disabled', 'disabled');
 			client.onPeerFound = function() {
-				//$('#bootstrapRow').remove();
 				$('#myOwnID').html('<p>' + client.id + '</p>');
 				client.pool.onPoolChanged = function() {
-					$('#peerList').html(JSON.stringify(client.pool));
+					var div = $('<div></div>');
+					client.pool.getIds().forEach(function(id) { div.append(id + '<br>'); });
+					$('#peerList').html(div);
 				}
 				console.log('Assigned ID is ' + client.id);
 			}
@@ -105,7 +106,7 @@
 	
 	<div class='row'>
 		<div class='span4'>
-		<div id='myOwnID' class='alert alert-error' style='overflow : scroll; font-size : 12px; height : 300px'>
+		<div id='myOwnID' class='alert alert-error' style='overflow : scroll; font-size : 12px; height : 30px'>
 		</div>
 	</div>
 		
