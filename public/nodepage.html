@@ -46,7 +46,7 @@
 				$('#myOwnID').html('<p>' + client.id + '</p>');
 				client.pool.onPoolChanged = function() {
 					var div = $('<div></div>');
-					client.pool.getIds().forEach(function(id) { div.append(id); });
+					client.pool.getIds().forEach(function(id) { div.append(id + '<br>'); });
 					$('#peerList').html(div);
 				}
 				console.log('Assigned ID is ' + client.id);
