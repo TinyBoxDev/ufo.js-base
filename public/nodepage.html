@@ -46,7 +46,13 @@
 				$('#myOwnID').html('<p>' + client.id + '</p>');
 				client.pool.onPoolChanged = function() {
 					var div = $('<div></div>');
-					client.pool.getIds().forEach(function(id) { div.append(id + '<br>'); });
+					
+					var printList = function(element, index, array) {
+						div.append('<input id="peer_' + index + '" type="checkbox">' + element + '<br>');
+					}
+					;
+					client.pool.getIds().forEach(printList);
+					//client.pool.getIds().forEach(function(id) { div.append('<input id="' + id + '" type="checkbox">' + id + '<br>'); });
 					$('#peerList').html(div);
 				}
 				console.log('Assigned ID is ' + client.id);
@@ -56,7 +62,11 @@
 		
 		var sendMessage = function() {
 			var messageToSend = $('#messageBox').val();
-			client.pool[client.pool[0]].send(new p2pPacket('echo', messageToSend, true));
+			for (var index = 0; index < 4; index++) {
+				if ($('#peer_' + index).checked)
+					client.pool[client.pool[index]].send(new p2pPacket('echo', messageToSend, true));
+			}
+			//client.pool[client.pool[0]].send(new p2pPacket('echo', messageToSend, true));
 			console.msg(messageToSend);
 			$('#messageBox').val('Burp here!');
 		}
