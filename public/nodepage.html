@@ -30,14 +30,21 @@
 			//panel: $('#cacca'),
 			log: function(msg) {
 				$('#consoleLogPanel').prepend('<p>' + msg + '</p>');
+				
 			},
-			error : function(mgs) {
-				$('#consoleErrPanel').append('<div>' + msg + '</div>');
+			msg : function(msg) {
+				$('#consoleMessages').append('<p>Msg:' + msg + '</p>');
 			},
 			warn : function(msg) {
-				$('#consoleWarnPanel').append('<div>' + msg + '</div>');
+				$('#consoleWarnPanel').append('<p>' + msg + '</p>');
 			}
 		};
+		
+		var sendMessage = function() {
+			var messageToSend = $('#cacca').val();
+			console.msg(messageToSend);
+			$('#messageBox').val('Burp here!');
+		}
 		
 		var runClient = function() {
 			console.log('Client is contacting server.');
@@ -65,14 +72,24 @@
 	
 	<div class="row">
 		<div class='span4'>
-			<div id='consoleLogTitle' class='alert alert-info' style='overflow : scroll; font-size : 12px; height : 450px'>
-				<p align='center'>Status</p><hr>
-				<div id='consoleLogPanel'></div>
+			<div id='consoleLogTitle' class='alert alert-info' style='overflow : scroll; font-size : 12px; height : 300px'>
+				<p align='center'>Status</p><hr><FONT FACE="courier">
+				<div id='consoleLogPanel'></div></FONT>
 		</div></div>
-		<!--
 		<div class='span4'>
-			<div id='consoleWarnPanel' class='alert alert-warning' style='font-size : 12px;'><p align='center'>Warnings</p><hr></div>
+			<div id='consoleMessagesTitle' class='alert alert-success' style='overflow : scroll; font-size : 12px; height : 300px'>
+				<p align='center'>Messages</p><hr><FONT FACE="courier">
+				<div id='consoleMessages' classe='alert alert-warning' style='font-size : 12px;'></div></FONT>
+		</div></div>
+		<div class='span4'>
+				<p>
+					<input id='messageBox' type='text' value='Burp here!' name='messageBox' onfocus="this.value=''">
+				</p>
+				<p>
+					<button class="btn btn-large btn-success" type="button" id="sendMessage" onClick="sendMessage()">Send message</button>
+				</p>
 		</div>
+		<!--
 		<div class='span4'>
 			<div id='consoleErrPanel' class='alert alert-error' style='font-size : 12px;'><p align='center'>Errors</p><hr></div>
 		</div>
