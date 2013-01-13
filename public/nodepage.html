@@ -28,7 +28,7 @@
 	<script>
 		var console = {
 			log: function(message) {
-				$('#consoleLogPanel').append('<p>' + message + '</p>');
+				$('#consoleLogPanel').prepend('<p>' + message + '</p>');
 				
 			},
 			msg : function(message) {
