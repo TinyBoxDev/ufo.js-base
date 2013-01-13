@@ -26,18 +26,18 @@
   <div class="container">
 
 	<script>
-		//var console = {
-		//	log: function(message) {
-		//		$('#consoleLogPanel').prepend('<p>' + message + '</p>');
-		//		
-		//	},
-		//	msg : function(message) {
-		//		$('#consoleMessages').prepend('<p>' + message + '</p>');
-		//	},
-		//	warn : function(message) {
-		//		$('#consoleWarnPanel').append('<p>' + message + '</p>');
-		//	}
-		//};
+		var console = {
+			log: function(message) {
+				$('#consoleLogPanel').prepend('<p>' + message + '</p>');
+				
+			},
+			msg : function(message) {
+				$('#consoleMessages').prepend('<p>' + message + '</p>');
+			},
+			warn : function(message) {
+				$('#consoleWarnPanel').append('<p>' + message + '</p>');
+			}
+		};
 		
 		var runClient = function() {
 			console.log('Client is contacting server.');
