@@ -15,6 +15,6 @@ In order to make it work, you just need to:
 You can execute all the application tests in 2 different ways:
 
 1. launch server tests with `make test`
-2. launch modules tests by opening with FirefoxNightly `./testweb/runner.html` and enjoy mocha
+2. launch modules tests with `make testweb` (you need Chrome Canary to be installed!)
 
 If you wanna be super fast, just type `make` while you are inside the root folder of the project and let us do the rest.
