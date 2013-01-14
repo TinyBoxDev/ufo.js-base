@@ -31,12 +31,12 @@ describe('Peering Reply Packet:\n', function(){
 		assert(testPacket.LO_ADDR == 'LO_ADDRESS');
 		assert(testPacket.PORT_NUMBER == 'PORT_NUMBER');
 		assert(testPacket.EXTERNAL_ADDR == 'EXTERNAL_ADDRESS');
-		assert(testPacket.CANDIDATE_ID_1 == 'CANDIDATE_ID_1');
-		assert(testPacket.CANDIDATE_ID_2 == 'CANDIDATE_ID_2');
-		assert(testPacket.CANDIDATE_TYPE_1 == 'CANDIDATE_TYPE_1');
-		assert(testPacket.CANDIDATE_TYPE_2 == 'CANDIDATE_TYPE_2');
-		assert(testPacket.CANDIDATE_NUMBER_1 == 'CANDIDATE_NUMBER_1');
-		assert(testPacket.CANDIDATE_NUMBER_2 == 'CANDIDATE_NUMBER_2');
+		//assert(testPacket.CANDIDATE_ID_1 == 'CANDIDATE_ID_1');
+		//assert(testPacket.CANDIDATE_ID_2 == 'CANDIDATE_ID_2');
+		//assert(testPacket.CANDIDATE_TYPE_1 == 'CANDIDATE_TYPE_1');
+		//assert(testPacket.CANDIDATE_TYPE_2 == 'CANDIDATE_TYPE_2');
+		//assert(testPacket.CANDIDATE_NUMBER_1 == 'CANDIDATE_NUMBER_1');
+		//assert(testPacket.CANDIDATE_NUMBER_2 == 'CANDIDATE_NUMBER_2');
 		assert(testPacket.LOCAL_ADDR == 'LOCAL_ADDRESS');
 		assert(testPacket.FRAGMENT == 'FRAGMENT');
 		assert(testPacket.PWD == 'PWD');
