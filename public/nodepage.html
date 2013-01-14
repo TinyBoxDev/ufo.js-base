@@ -59,6 +59,7 @@
 				$('#peerList').html('<div><input id="peer_0" type="checkbox">' + client.pool.getIds()[0] + '<br></div>');
 				console.log('Assigned ID is ' + client.id);
 			}
+			client.onDensifyPerformed = client.onBootstrapPerformed;
 			client.bootstrap();
 		}
 		
