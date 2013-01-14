@@ -42,12 +42,12 @@
 		var runClient = function() {
 			console.log('Client is contacting server.');
 			$('#bootstrapBtn').attr('disabled', 'disabled');
+			$('#disconnectBtn').prop('disabled', null);
 			client.onPeerFound = function() {
 				$('#myOwnID').html('<p>' + client.id + '</p>');
 				
 				client.pool.onPoolChanged = function() {
 					var div = $('<div></div>');
-					$('#disconnectBtn').prop('disabled', null);
 					var printList = function(element, index, array) {
 						div.append('<label class="checkbox"><input id="peer_' + index + '" type="checkbox"> ' + element + '</label><br>');
 					}
