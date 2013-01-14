@@ -43,7 +43,7 @@
 			console.log('Client is contacting server.');
 			$('#bootstrapBtn').attr('disabled', 'disabled');
 			$('#disconnectBtn').prop('disabled', null);
-			client.onPeerFound = function() {
+			client.onBootstrapPerformed = function() {
 				$('#myOwnID').html('<p>' + client.id + '</p>');
 				
 				client.pool.onPoolChanged = function() {
