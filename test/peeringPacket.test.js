@@ -64,5 +64,5 @@ describe('Peering Packet:\n', function(){
 		console.log(result.sdp);
 		assert(sdpString==result.sdp);
 		done();
-	})
+	});
 });
