@@ -37,8 +37,7 @@ describe('Peer:\n', function(){
 
 	it('Should send a request to search a new peer', function(done) {
 		var checkPacket = function(reply) {
-			reply.body.should.have.property('offer');
-			assert(reply.body.offer!=null);
+			assert(new peeringPacket().fill(reply.body).toOffer() instanceof RTCSessionDescription);
 			done();
 		}	
 		var onBootstrap = function() {
@@ -58,20 +57,15 @@ describe('Peer:\n', function(){
 
 		var onOffer = function(pkt) {
 			console.log(pkt.body);
-			remotePort = pkt.body.port;
 			
-			var descriptor = new RTCSessionDescription(pkt.body.offer);
+			var descriptor = new peeringPacket().fill(pkt.body).toOffer();
 
 			pc.setRemoteDescription(descriptor, function() { setRemoteStuffs(pkt); }, function(error) { console.log(error); });
 
 		}
 
 		var setRemoteStuffs = function(pkt) {
-			pkt.body.candidates.forEach(function(candidate){
-				console.log(candidate);
-				pc.addIceCandidate(new RTCIceCandidate(candidate));
-  			});
-			
+						
 			pc.createAnswer(onAnswer, function(){});
 			
 		}
@@ -109,10 +103,14 @@ describe('Peer:\n', function(){
 		client.id = 'cacca';
 		
 		var onOffer = function(offerPkt) {
-			thisPeer.createSocketForPeer(offerPkt, secondPeer, function() { 
+			thisPeer.createSocketForPeer(offerPkt, function() { 
 				done();
 			});
 		}
+
+		client.carryHome = function(message) {
+			secondPeer.channel.peeringReply(message);
+		};
 
 		var onBootstrap = function() {
 			secondPeer.channel.on('peering', onOffer);						

@@ -37,7 +37,7 @@ describe('Peering Reply Packet:\n', function(){
 		//assert(testPacket.CANDIDATE_TYPE_2 == 'CANDIDATE_TYPE_2');
 		//assert(testPacket.CANDIDATE_NUMBER_1 == 'CANDIDATE_NUMBER_1');
 		//assert(testPacket.CANDIDATE_NUMBER_2 == 'CANDIDATE_NUMBER_2');
-		assert(testPacket.LOCAL_ADDR == 'LOCAL_ADDRESS');
+		//assert(testPacket.LOCAL_ADDR == 'LOCAL_ADDRESS');
 		assert(testPacket.FRAGMENT == 'FRAGMENT');
 		assert(testPacket.PWD == 'PWD');
 		assert(testPacket.TOKEN == 'TOKEN');
