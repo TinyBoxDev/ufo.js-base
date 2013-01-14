@@ -47,7 +47,7 @@
 				
 				client.pool.onPoolChanged = function() {
 					var div = $('<div></div>');
-					
+					$('#disconnectBtn').prop('disabled', null);
 					var printList = function(element, index, array) {
 						div.append('<label class="checkbox"><input id="peer_' + index + '" type="checkbox"> ' + element + '</label><br>');
 					}
@@ -71,6 +71,11 @@
 				}
 			}
 		}
+		
+		var disconnectClient = function() {
+			client.disconnectMe();
+			$('#disconnectBtn').prop('disabled', null);
+		}
 
 	</script>
 
@@ -81,6 +86,7 @@
 	<div class="row" id="bootstrapRow">
         	<div class="span6 offset3" align="center">
 			<button class="btn btn-large btn-warning" type="button" id="bootstrapBtn" onClick="runClient();">Bootstrap</button>
+			<button class="btn btn-large btn-danger" type="button" id="disconnectBtn" onClick="disconnectClient();" disabled>Disconnect</button>
 		</div>
 	</div>
 	
