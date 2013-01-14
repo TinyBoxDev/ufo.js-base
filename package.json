@@ -6,7 +6,8 @@
   "repository": "https://github.com/TinyBoxDev/p2pwebsharing.git",
   "dependencies" : {
     "express" : "*",
-    "ws" : "*"
+    "ws" : "*",
+    "dot" : "*"
   },
   "devDependencies" : {
     "browserify" : "*",
