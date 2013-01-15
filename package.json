@@ -18,7 +18,7 @@
     "lib" : "./lib"
   },
   "scripts": {
-  "test": "make test"
+  "test": "bin/travis_script"
   },
   "browserify" : "lib/client.js",
   "engines": {

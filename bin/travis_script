@@ -1,0 +1,5 @@
+#! /bin/bash
+
+npm install
+./node_modules/.bin/browserify lib/client.js -o lib/client.bundle.js -i socket.io
+NODE_PATH="./lib/" ./node_modules/.bin/mocha --reporter spec test/*.server.*
