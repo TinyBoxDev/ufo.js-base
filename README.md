@@ -1,4 +1,4 @@
-p2pwebsharing
+[![Build Status](https://travis-ci.org/TinyBoxDev/p2pwebsharing.png?branch=master)](https://travis-ci.org/TinyBoxDev/p2pwebsharing) p2pwebsharing
 =============
 
 P2P Websharing is a simple browser-based platform for communicating and file sharing. It is hard pre-alpha version, so don't get mad if something is not working.
