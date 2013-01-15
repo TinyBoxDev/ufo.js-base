@@ -57,14 +57,14 @@ describe('BSPeer:\n', function(){
 	    	data = JSON.parse(data);
 	    	data.should.have.property('type');
 	    	if(data.type == 'peeringReply') {
-				data.body.should.have.property('answer');
-				assert(data.body.answer == null);
+				data.body.should.have.property('isAnswerPresent');
+				assert(data.body.isAnswerPresent == false);
 				done();
 			}
 		}
 		
 		var sendPeeringRequest = function() {
-			var pkt = new p2pPacket('peering', 'test request', false);
+			var pkt = new p2pPacket('peering', 'test request', true);
 			pkt.addIDToPath('cacca');
 	    	testClient.send(pkt.toString());
 		}
@@ -81,7 +81,7 @@ describe('BSPeer:\n', function(){
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer1', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		conn1.send(pkt.toString());
@@ -98,7 +98,7 @@ describe('BSPeer:\n', function(){
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer2', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		conn2.send(pkt.toString());
@@ -115,7 +115,7 @@ describe('BSPeer:\n', function(){
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer3', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		conn3.send(pkt.toString());
@@ -132,7 +132,7 @@ describe('BSPeer:\n', function(){
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer4', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		conn4.send(pkt.toString());
@@ -151,7 +151,7 @@ describe('BSPeer:\n', function(){
 			data = JSON.parse(data);
 			if(data.type === 'setId') {
 				console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('outOfSpace', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		outOfSpace.send(pkt.toString());
@@ -174,7 +174,7 @@ describe('BSPeer:\n', function(){
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);
 				//console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer1', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
     			conn1.send(pkt.toString());
@@ -191,7 +191,7 @@ describe('BSPeer:\n', function(){
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);				
 				//console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer2', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		conn2.send(pkt.toString());
@@ -208,7 +208,7 @@ describe('BSPeer:\n', function(){
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);				
 				//console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer3', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		conn3.send(pkt.toString());
@@ -225,7 +225,7 @@ describe('BSPeer:\n', function(){
 			if(data.type === 'setId') {
 				injectedPath.push(data.body.id);				
 				//console.log('sending peering');
-				var pkt = new p2pPacket('peering', new peeringPacket('offer4', null, data.body.id), false);
+				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
 				//console.log(pkt);
 	    		conn4.send(pkt.toString());
@@ -245,7 +245,7 @@ describe('BSPeer:\n', function(){
 				if(data.type === 'setId') {
 					injectedPath.push(data.body.id);				
 					//console.log('sending peering');
-					var pkt = new p2pPacket('peering', new peeringPacket('outOfSpace', null, data.body.id), false);
+					var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 					pkt.path = injectedPath;
 					//console.log(pkt);
 	    			outOfSpace.send(pkt.toString());

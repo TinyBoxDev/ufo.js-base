@@ -87,5 +87,7 @@ describe('Client:\n', function() {
 		pc.createOffer(onOfferCreated, function(error) { console.log(error); }, {});
 			
 	});
+
+	it('Should search new peer ')
 	
 });

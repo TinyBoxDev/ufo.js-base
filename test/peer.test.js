@@ -42,7 +42,7 @@ describe('Peer:\n', function(){
 		}	
 		var onBootstrap = function() {
 			thisPeer.channel.on('peering', checkPacket);
-			thisPeer.lookForAPeer();
+			thisPeer.findFirstPeer();
 		}
 
 		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);
@@ -93,7 +93,7 @@ describe('Peer:\n', function(){
 		}
 		var onBootstrap = function() {
 			thisPeer.channel.on('peering', onOffer);
-			thisPeer.lookForAPeer(function() { pc.close(); done(); } );
+			thisPeer.findFirstPeer(function() { pc.close(); done(); } );
 		}
 		thisPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);		
 	});
@@ -114,7 +114,7 @@ describe('Peer:\n', function(){
 
 		var onBootstrap = function() {
 			secondPeer.channel.on('peering', onOffer);						
-			secondPeer.lookForAPeer(function() { console.log('SecondPeer ends') });
+			secondPeer.findFirstPeer(function() { console.log('SecondPeer ends') });
 		}
 		var secondPeer = new Peer('ws://helloiampau.echotestserver.jit.su/', onBootstrap);
 	});
