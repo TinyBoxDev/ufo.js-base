@@ -83,7 +83,6 @@ describe('BSPeer:\n', function(){
 				console.log('sending peering');
 				var pkt = new p2pPacket('peering', new peeringPacket(data.body.id), true);
 				pkt.addIDToPath(data.body.id);
-				//console.log(pkt);
 	    		conn1.send(pkt.toString());
 			}
 			else if(data.type === 'peering') {
