@@ -88,6 +88,4 @@ describe('Client:\n', function() {
 			
 	});
 
-	it('Should search new peer ')
-	
 });

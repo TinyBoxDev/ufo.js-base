@@ -95,6 +95,7 @@ describe('Connection Pool:\n', function() {
 		done();
 	});
 
+	/*
 	it('Should return an array with all ids', function(done) {
 		thisConnectionPool.pushConnection('test1', 'conn1');
 		thisConnectionPool.pushConnection('test2', 'conn2');
@@ -104,5 +105,6 @@ describe('Connection Pool:\n', function() {
 		assert(idsArray.indexOf('test1') != -1 && idsArray.indexOf('test2') != -1 && idsArray.indexOf('test3') != -1);
 		done();
 	});
+	*/
 
 });
