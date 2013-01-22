@@ -6,21 +6,15 @@
   "repository": "https://github.com/TinyBoxDev/p2pwebsharing.git",
   "dependencies" : {
     "express" : "*",
-    "ws" : "*"
+	"ejs" : "*"
   },
   "devDependencies" : {
-    "browserify" : "*",
-    "uglify-js" : "*",
     "should" : "*",
     "mocha" : "*"
   },
   "directories" : {
     "lib" : "./lib"
   },
-  "scripts": {
-  "test": "bin/travis_script"
-  },
-  "browserify" : "lib/client.js",
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
