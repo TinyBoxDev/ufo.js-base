@@ -17,6 +17,9 @@
   "directories" : {
     "lib" : "./lib"
   },
+  "scripts": {
+    "test": "bin/travis_script"
+    },
   "engines": {
     "node": "0.8.x",
     "npm": "1.1.x"
