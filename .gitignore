@@ -25,3 +25,5 @@ public/js/client.min.js
 nohup.out
 
 lib/client.bundle.js
+
+*.rdb

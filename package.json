@@ -6,7 +6,9 @@
   "repository": "https://github.com/TinyBoxDev/p2pwebsharing.git",
   "dependencies" : {
     "express" : "*",
-	"ejs" : "*"
+	"ejs" : "*",
+	"redis" : "*",
+	"hiredis" : "*"
   },
   "devDependencies" : {
     "should" : "*",

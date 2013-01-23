@@ -8,6 +8,12 @@ if(typeof window === 'undefined')
 var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
+var redis = require('redis');
+var client = redis.createClient();
+
+client.on("error", function (err) {
+    console.log("Error " + err);
+});
 
 var pagesFolder = __dirname + "/public/";
 var templatesFolder = pagesFolder + "templates/";
@@ -41,14 +47,36 @@ app.get('/publish.html', function(request, response) {
 	serverList[1] = 'http://ufojs.dyndns.biz/nodepage.html';
 	var connectedServers = serverList.length;
 	
+	
+	// STUB : saving request number
+	var remoteAddress = request.connection.remoteAddress;
 	var generatedID = randomString(16, '#aA');
 	
+	client.incr('id', function(error, id) {
+		client.set('req' + id, generatedID, function() {
+			console.log('Request saved on Redis');
+		});
+		client.expire('req' + id, 300);
+	});
+	
+	var pendingClients = 0;
+	var response;
+	client.keys('*', function (err, keys) {
+		response = keys;
+		console.log(response);
+	});
+	pendingClients = response.length;
+	
+	response.setHeader("Content-Type", "text/html");
+	response.setHeader("Set-Cookie", generatedID);
 	response.render(templatesFolder + "baseTemplate.ejs", 
 		{
-			'time' : time ,
+			'time' : time,
 			'connectedServer' : connectedServers,
+			'pendingClients' : pendingClients,
 			'serverList' : serverList,
-			'generatedID' : generatedID
+			'generatedID' : generatedID,
+			'callingIP' : remoteAddress
 		});
 });
 
