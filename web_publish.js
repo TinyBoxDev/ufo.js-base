@@ -91,8 +91,11 @@ app.post('/nodepage.html', function(request, response) {
 				});
 			}
 		});
+	} else if(request.body.id != null && request.body.alive != null) {
+		client.expire(request.body.id, 300);
+		response.send('You now got more TTL!');
 	} else {
-		response.send('No way! Gimme some info about you!');
+	response.send('No way! Gimme some info about you!');
 	}
 
 });
