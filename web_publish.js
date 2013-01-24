@@ -44,8 +44,8 @@ app.get('/nodepage.html', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
 	
 	var serverList = [];
-	serverList.push('http://www.ufojs.com');
-	serverList.push('http://ufojs.dyndns.biz');
+	serverList.push('ws://www.ufojs.com');
+	serverList.push('ws://ufojs.dyndns.biz');
 	
 	client.keys('*', function(err, keys) {
 		if(keys.length == 0) {
