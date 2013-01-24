@@ -60,7 +60,7 @@ app.get('/nodepage.html', function(request, response) {
 				client.get(key, function(err, res) {
 					//console.log('http://' + JSON.parse(res).ip);
 					serverList.push('http://' + JSON.parse(res).ip + ':' + JSON.parse(res).port);
-					serverList.push('http://' + JSON.parse(res).ip);
+					//serverList.push('http://' + JSON.parse(res).ip);
 					if(index == keys.length -1) {
 						response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
 					}
@@ -73,13 +73,6 @@ app.get('/nodepage.html', function(request, response) {
 app.post('/nodepage.html', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
 	response.setHeader("Access-Control-Allow-Origin", "*");
-	
-	console.log(request.body);
-	
-	console.log(request.body.id != null);
-	console.log(request.body.addr != null);
-	console.log(request.body.port != null);
-	console.log(request.body.isalive != null);
 	
 	// check if every required field is present inside the publish POST request
 	if(request.body.id != null && request.body.addr != null && request.body.port != null) {
