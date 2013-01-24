@@ -64,7 +64,8 @@
 			
 			var el = document.getElementById('serverList');
 			var text = el.options[el.selectedIndex].text;
-			client.bootstrap();
+			console.log(text);
+			client.bootstrap(text);
 		}
 		
 		var sendMessage = function() {
@@ -85,7 +86,8 @@
 
 		var serverizeClient = function() {
 			var http = new XMLHttpRequest();
-			var url = "http://127.0.0.1:9999/nodepage.html";
+			//var url = "http://127.0.0.1:9999/nodepage.html";
+			var url = "http://www.ufojs.com/nodepage.html";
 			var params = "id=" + client.id + "&addr=" + document.location.host + "&port=" + document.location.port;
 			http.open("POST", url, true);
 			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
