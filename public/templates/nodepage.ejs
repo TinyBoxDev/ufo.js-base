@@ -85,14 +85,30 @@
 			var url = "http://127.0.0.1:9999/nodepage.html";
 			var params = "id=" + client.id + "&addr=" + document.location.host + "&port=" + document.location.port;
 			http.open("POST", url, true);
-			
 			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			
 			http.onreadystatechange = function() {
 				if(http.readyState == 4 && http.status == 200) {
 					console.log(http.responseText);
 				}
 			}
 
+			http.send(params);
+		}
+		
+		var heartbeatClient = function() {
+			var http = new XMLHttpRequest();
+			var url = "http://127.0.0.1:9999/isalive.html";
+			var params = "id=" + client.id + "&isalive=true";
+			http.open("POST", url, true);
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			
+			http.onreadystatechange = function() {
+				if(http.readyState == 4 && http.status == 200) {
+					console.log(http.responseText);
+				}
+			}
+			
 			http.send(params);
 		}
 
@@ -105,8 +121,9 @@
 	<div class="row" id="bootstrapRow" align='center'>
         	<div class="span6 offset3" align="center">
 			<button class="btn btn-primary btn-warning" type="button" id="bootstrapBtn" onClick="runClient();">Bootstrap</button>
-			<button class="btn btn-primary btn-info" type="button" id="bootstrapBtn" onClick="client.densify();">Densify</button>
 			<button class="btn btn-primary btn-inverse" type="button" id="serverizeBtn" onClick="serverizeClient();">Serverize</button>
+			<button class="btn btn-primary btn-primary" type="button" id="heartbeatBtn" onClick="heartbeatClient();">Heartbeat</button>
+			<button class="btn btn-primary btn-info" type="button" id="bootstrapBtn" onClick="client.densify();">Densify</button>
 			<button class="btn btn-primary btn-danger" type="button" id="disconnectBtn" onClick="disconnectClient();" disabled>Disconnect</button>
 		</div>
 	</div>

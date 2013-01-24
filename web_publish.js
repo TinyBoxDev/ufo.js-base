@@ -27,7 +27,9 @@ app.configure(function () {
 	
 	// Static Files Folder : hello CSS!
 	app.use(app.router);
-	app.use(express.static(__dirname + '/public'));
+	//app.use(express.static(__dirname + '/public'));
+	app.use(express.static(pagesFolder));
+	//app.use(express.template(templatesFolder));
 	
 	app.use(express.cookieParser());
 	app.use(express.methodOverride());
@@ -38,16 +40,68 @@ app.get('/', function(request, response) {
 	response.sendfile(pagesFolder + "index.html");
 });
 
-app.post('/nodepage.html', function(request, response) {
+app.get('/nodepage.html', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
 	
-	if(request.body.id != 'null' && request.body.id != 'null' && request.body.port != 'null') {
-		var newEntry = { 'ip' : request.body.addr.toString(), 'port' : request.body.port.toString() };
+	var serverList = [];
 	
-		client.set(request.body.id, JSON.stringify(newEntry), function() {
-			client.expire(request.body.id, 300);
-			console.log('New entry in database: ' + request.body.id + ' on ip ' + newEntry.ip + ' and port ' + newEntry.port);
-			response.send('Good job dude! Your stuff is ' + request.body.id + " " + request.body.addr + " " + request.body.port);
+	/*
+	client.lrange(0, -1, function(err, res) {
+		serverList = res;
+		response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
+	});
+	*/
+	
+	
+	client.keys('*', function (err, keys) {
+		response.setHeader("Content-Type", "text/html");
+		//if(keys.length === 0) {
+		//	serverList.push('No server under mind control!');
+		//	response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
+		//}
+		
+		keys.forEach(function(key, index, array) {
+			client.get(key, function(err, res) {
+				serverList.push(res.ip);
+				if(index == keys.length -1) {
+					response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
+				}
+			});
+		});
+		
+		/*
+		for(var index = 0; index < keys.length; index++) {
+			client.get(keys[index], function(err, res) {
+				serverList[index] = res.ip;
+			});
+		}
+		*/
+		
+		//response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
+		
+	});
+});
+
+app.post('/nodepage.html', function(request, response) {
+	response.setHeader("Content-Type", "text/html");
+	response.setHeader("Access-Control-Allow-Origin", "*");
+	
+	// check if every required field is present inside the publish POST request
+	if(request.body.id != 'null' && request.body.id != 'null' && request.body.port != 'null') {
+		
+		// check if id is inside redis already
+		client.get(request.body.id, function(err, resp) {
+			if(resp) {
+				//console.log('already present!');
+				response.send('Someone with that ID is already under our mind control!');
+			} else {
+				var newEntry = { 'ip' : request.body.addr.toString(), 'port' : request.body.port.toString() };
+				client.set(request.body.id, JSON.stringify(newEntry), function(err, resp) {
+					client.expire(request.body.id, 300);
+					//console.log('New entry in database: ' + request.body.id + ' on ip ' + newEntry.ip + ' and port ' + newEntry.port);
+					response.send('Good job dude! Your stuff is ' + request.body.id + " " + request.body.addr + " " + request.body.port);
+				});
+			}
 		});
 	} else {
 		response.send('No way! Gimme some information about you!');
@@ -55,23 +109,20 @@ app.post('/nodepage.html', function(request, response) {
 
 });
 
-app.get('/nodepage.html', function(request, response) {
+app.post('isalive.html', function(request, response) {
+	console.log('TTL update request received');
 	response.setHeader("Content-Type", "text/html");
+	response.setHeader("Access-Control-Allow-Origin", "*");
 	
-	// STUB : server list has to come from redis client!
-	var serverList = [];
-	serverList[0] = 'http://www.ufojs.com/nodepage.html';
-	serverList[1] = 'http://ufojs.dyndns.biz/nodepage.html';
+	if(request.body.id != 'null' && request.body.isalive != 'null') {
+		client.expire(request.body.id, 300, function(err, res) {
+			console.log('TTL for ' + request.body.id + ' correctly updated');
+			response.send('Heartbeat received and TTL updated!');
+		});
+	} else {
+		response.send('Invalid heartbeat!');
+	}
 	
-	// STUB : get all the keys and load them to the page
-	client.keys('*', function (err, keys) {
-		for(var index = 0; index < keys.length; index++) {
-		}
-		response.render(templatesFolder + "nodepage.ejs",
-			{
-				'serverList' : serverList
-			});
-	});
 });
 
 /*
