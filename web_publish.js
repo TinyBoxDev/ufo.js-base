@@ -58,8 +58,8 @@ app.get('/nodepage.html', function(request, response) {
 		} else {
 			keys.forEach(function(key, index, array) {
 				client.get(key, function(err, res) {
-					console.log('http://' + JSON.parse(res).ip);
-					//serverList.push('http://' + JSON.parse(res).ip + ':' + JSON.parse(res).port);
+					//console.log('http://' + JSON.parse(res).ip);
+					serverList.push('http://' + JSON.parse(res).ip + ':' + JSON.parse(res).port);
 					serverList.push('http://' + JSON.parse(res).ip);
 					if(index == keys.length -1) {
 						response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
@@ -75,7 +75,7 @@ app.post('/nodepage.html', function(request, response) {
 	response.setHeader("Access-Control-Allow-Origin", "*");
 	
 	// check if every required field is present inside the publish POST request
-	if(request.body.id != 'null' && request.body.id != 'null' && request.body.port != 'null') {
+	if(request.body.id != 'null' && request.body.ip != 'null' && request.body.port != 'null') {
 		
 		// check if id is inside redis already
 		client.get(request.body.id, function(err, resp) {
