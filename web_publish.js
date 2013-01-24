@@ -50,7 +50,7 @@ app.get('/nodepage.html', function(request, response) {
 	client.keys('*', function(err, keys) {
 		if(keys.length == 0) {
 			console.log('no element inside redis');
-			serverList.push('No server under mind control!');
+			serverList.push('No more servers under mind control!');
 			response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
 		} else {
 			keys.forEach(function(key, index, array) {
