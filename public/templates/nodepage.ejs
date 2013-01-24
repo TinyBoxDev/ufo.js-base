@@ -61,6 +61,9 @@
 			client.onDensifyPerformed = function() {
 				
 			}
+			
+			var el = document.getElementById('serverList');
+			var text = el.options[el.selectedIndex].text;
 			client.bootstrap();
 		}
 		
@@ -132,12 +135,20 @@
 	
 	<div class="row">
 		<div class='span3'>
+			<select id='serverList' class="span3">
+				<% for(var i=0; i<serverList.length; i++) { %>
+						<option id="server""<%= i %>"><%= serverList[i] %></option>
+				<% } %>
+			</select>
+			<!--
 			<div id='serverList' class='alert' style='overflow : auto; font-size : 12px;'>
 				<p align='center'>Servers</p><hr>
 				<% for(var i=0; i<serverList.length; i++) { %>
-						<label style='font-size : 11px' class="checkbox"><input id="server""<%= i %>" type="checkbox"><%= serverList[i] %></label>
+						<label style='font-size : 11px' class="radio"><input id="server""<%= i %>" type="radio"><%= serverList[i] %></label>
 				<% } %>
 			</div>
+			-->
+			
 		</div>
 		<div class='span3'>
 			<div id='consoleLogTitle' class='alert alert-info' style='overflow : auto; font-size : 12px; height : 300px'>

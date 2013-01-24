@@ -44,41 +44,26 @@ app.get('/nodepage.html', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
 	
 	var serverList = [];
+	serverList.push('http://www.ufojs.com');
+	serverList.push('http://ufojs.dyndns.biz');
 	
-	/*
-	client.lrange(0, -1, function(err, res) {
-		serverList = res;
-		response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
-	});
-	*/
-	
-	
-	client.keys('*', function (err, keys) {
-		response.setHeader("Content-Type", "text/html");
-		//if(keys.length === 0) {
-		//	serverList.push('No server under mind control!');
-		//	response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
-		//}
-		
-		keys.forEach(function(key, index, array) {
-			client.get(key, function(err, res) {
-				serverList.push(res.ip);
-				if(index == keys.length -1) {
-					response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
-				}
-			});
-		});
-		
-		/*
-		for(var index = 0; index < keys.length; index++) {
-			client.get(keys[index], function(err, res) {
-				serverList[index] = res.ip;
+	client.keys('*', function(err, keys) {
+		if(keys.length == 0) {
+			console.log('no element inside redis');
+			serverList.push('No server under mind control!');
+			response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
+		} else {
+			keys.forEach(function(key, index, array) {
+				client.get(key, function(err, res) {
+					console.log('http://' + JSON.parse(res).ip);
+					//serverList.push('http://' + JSON.parse(res).ip + ':' + JSON.parse(res).port);
+					serverList.push('http://' + JSON.parse(res).ip);
+					if(index == keys.length -1) {
+						response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
+					}
+				});
 			});
 		}
-		*/
-		
-		//response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
-		
 	});
 });
 
@@ -93,7 +78,7 @@ app.post('/nodepage.html', function(request, response) {
 		client.get(request.body.id, function(err, resp) {
 			if(resp) {
 				//console.log('already present!');
-				response.send('Someone with that ID is already under our mind control!');
+				response.send('Someone with your ID is already under our mind control!');
 			} else {
 				var newEntry = { 'ip' : request.body.addr.toString(), 'port' : request.body.port.toString() };
 				client.set(request.body.id, JSON.stringify(newEntry), function(err, resp) {
@@ -125,55 +110,7 @@ app.post('isalive.html', function(request, response) {
 	
 });
 
-/*
-app.get('/publish.html', function(request, response) {
-	
-	var now = new Date();
-	var mins = now.getMinutes();
-	var hours = now.getHours();
-	var time = hours + ':' + mins + '';
-	
-	// STUB : it will come from redis
-	var serverList = [];
-	serverList[0] = 'http://www.ufojs.com/nodepage.html';
-	serverList[1] = 'http://ufojs.dyndns.biz/nodepage.html';
-	var connectedServers = serverList.length;
-	
-	// STUB : saving request number
-	var remoteAddress = request.connection.remoteAddress;
-	var remotePort = request.connection.remotePort;
-	var generatedID = randomString(16, '#aA');
-	var pendingClients = 0;
-	
-	var toSave = { 'ip' : remoteAddress.toString(), 'port' : remotePort.toString() };
-	
-	client.set(generatedID, JSON.stringify(toSave), function() {
-		client.expire(generatedID, 300);
-	});
-	
-	client.keys('*', function (err, keys) {
-		pendingClients = keys.length;
-		response.render(templatesFolder + "baseTemplate.ejs", 
-			{
-				'time' : time,
-				'connectedServer' : connectedServers,
-				'pendingClients' : pendingClients,
-				'serverList' : serverList,
-				'generatedID' : generatedID,
-				'callingIP' : remoteAddress,
-				'remotePort' : remotePort
-			});
-		
-	});
-	
-	response.setHeader("Content-Type", "text/html");
-	//response.setHeader("Set-Cookie", generatedID);
-	response.cookie('GEN_ID', generatedID, { expires: new Date(now + 300), httpOnly: false });
-	
-});
-*/
-
-var port = process.env.PORT || 9999;
+var port = process.env.PORT || 8080;
 server.listen(port, function() {
   console.log("Listening on " + port);
 });
