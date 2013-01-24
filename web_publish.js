@@ -89,7 +89,7 @@ app.post('/nodepage.html', function(request, response) {
 			}
 		});
 	} else {
-		response.send('No way! Gimme some information about you!');
+		response.send('No way! Gimme some info about you!');
 	}
 
 });
