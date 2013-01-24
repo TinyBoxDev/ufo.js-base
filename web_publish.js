@@ -74,6 +74,8 @@ app.post('/nodepage.html', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
 	response.setHeader("Access-Control-Allow-Origin", "*");
 	
+	console.log(request.body);
+	
 	// check if every required field is present inside the publish POST request
 	if(request.body.id != 'null' && request.body.ip != 'null' && request.body.port != 'null') {
 		
@@ -91,9 +93,6 @@ app.post('/nodepage.html', function(request, response) {
 				});
 			}
 		});
-	} else if(request.body.id != null && request.body.alive != null) {
-		client.expire(request.body.id, 300);
-		response.send('You now got more TTL!');
 	} else {
 	response.send('No way! Gimme some info about you!');
 	}
