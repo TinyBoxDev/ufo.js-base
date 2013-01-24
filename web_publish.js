@@ -10,6 +10,9 @@ var app = express();
 var server = require('http').createServer(app);
 var redis = require('redis');
 var client = redis.createClient();
+var stinkyAlien = require('bsPeer').bspeer;
+
+stinkyAlien.startServer(server);
 
 client.on("error", function (err) {
 	console.log("Error " + err);
