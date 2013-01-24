@@ -75,16 +75,14 @@ app.post('/nodepage.html', function(request, response) {
 	response.setHeader("Access-Control-Allow-Origin", "*");
 	
 	console.log(request.body);
-	console.log(request.body.id != 'null');
-	console.log(request.body.ip != 'null');
-	console.log(request.body.port != 'null');
 	
 	console.log(request.body.id != null);
-	console.log(request.body.ip != null);
+	console.log(request.body.addr != null);
 	console.log(request.body.port != null);
+	console.log(request.body.alive != null);
 	
 	// check if every required field is present inside the publish POST request
-	if(request.body.id != 'null' && request.body.ip != 'null' && request.body.port != 'null') {
+	if(request.body.id != null && request.body.addr != null && request.body.port != null) {
 		
 		// check if id is inside redis already
 		client.get(request.body.id, function(err, resp) {
