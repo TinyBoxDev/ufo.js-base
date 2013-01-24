@@ -1,4 +1,4 @@
 #! /bin/bash
 
 CURRENT_LOG="./log/p2pwebsharing-`date +"%Y%m%d%H%M"`.log"
-NODE_PATH="./lib/" nohup node web.js > $CURRENT_LOG &
+NODE_PATH="./lib/" nohup node web_publish.js > $CURRENT_LOG &
