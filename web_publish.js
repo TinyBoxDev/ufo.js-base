@@ -79,7 +79,7 @@ app.post('/nodepage.html', function(request, response) {
 	console.log(request.body.id != null);
 	console.log(request.body.addr != null);
 	console.log(request.body.port != null);
-	console.log(request.body.alive != null);
+	console.log(request.body.isalive != null);
 	
 	// check if every required field is present inside the publish POST request
 	if(request.body.id != null && request.body.addr != null && request.body.port != null) {
@@ -98,8 +98,10 @@ app.post('/nodepage.html', function(request, response) {
 				});
 			}
 		});
+	} else if(request.body.id != null && request.body.isalive != null) {
+		response.send('This is a refresh request, isn\' it?');
 	} else {
-	response.send('No way! Gimme some info about you!');
+		response.send('No way! Gimme some info about you!');
 	}
 
 });
