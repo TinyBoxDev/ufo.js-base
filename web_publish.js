@@ -12,13 +12,14 @@ var redis = require('redis');
 var client = redis.createClient();
 
 client.on("error", function (err) {
-    console.log("Error " + err);
+	console.log("Error " + err);
 });
 
 var pagesFolder = __dirname + "/public/";
 var templatesFolder = pagesFolder + "templates/";
 
 // branch v11
+app.use(express.bodyParser());
 
 app.configure(function () {
 	// Show Errors Oppan Java Style
@@ -27,6 +28,9 @@ app.configure(function () {
 	// Static Files Folder : hello CSS!
 	app.use(app.router);
 	app.use(express.static(__dirname + '/public'));
+	
+	app.use(express.cookieParser());
+	app.use(express.methodOverride());
 });
 
 app.get('/', function(request, response) {
@@ -34,6 +38,43 @@ app.get('/', function(request, response) {
 	response.sendfile(pagesFolder + "index.html");
 });
 
+app.post('/nodepage.html', function(request, response) {
+	response.setHeader("Content-Type", "text/html");
+	
+	if(request.body.id != 'null' && request.body.id != 'null' && request.body.port != 'null') {
+		var newEntry = { 'ip' : request.body.addr.toString(), 'port' : request.body.port.toString() };
+	
+		client.set(request.body.id, JSON.stringify(newEntry), function() {
+			client.expire(request.body.id, 300);
+			console.log('New entry in database: ' + request.body.id + ' on ip ' + newEntry.ip + ' and port ' + newEntry.port);
+			response.send('Good job dude! Your stuff is ' + request.body.id + " " + request.body.addr + " " + request.body.port);
+		});
+	} else {
+		response.send('No way! Gimme some information about you!');
+	}
+
+});
+
+app.get('/nodepage.html', function(request, response) {
+	response.setHeader("Content-Type", "text/html");
+	
+	// STUB : server list has to come from redis client!
+	var serverList = [];
+	serverList[0] = 'http://www.ufojs.com/nodepage.html';
+	serverList[1] = 'http://ufojs.dyndns.biz/nodepage.html';
+	
+	// STUB : get all the keys and load them to the page
+	client.keys('*', function (err, keys) {
+		for(var index = 0; index < keys.length; index++) {
+		}
+		response.render(templatesFolder + "nodepage.ejs",
+			{
+				'serverList' : serverList
+			});
+	});
+});
+
+/*
 app.get('/publish.html', function(request, response) {
 	
 	var now = new Date();
@@ -47,38 +88,39 @@ app.get('/publish.html', function(request, response) {
 	serverList[1] = 'http://ufojs.dyndns.biz/nodepage.html';
 	var connectedServers = serverList.length;
 	
-	
 	// STUB : saving request number
 	var remoteAddress = request.connection.remoteAddress;
+	var remotePort = request.connection.remotePort;
 	var generatedID = randomString(16, '#aA');
-	
-	client.incr('id', function(error, id) {
-		client.set('req' + id, generatedID, function() {
-			console.log('Request saved on Redis');
-		});
-		client.expire('req' + id, 300);
-	});
-	
 	var pendingClients = 0;
-	var response;
-	client.keys('*', function (err, keys) {
-		response = keys;
-		console.log(response);
+	
+	var toSave = { 'ip' : remoteAddress.toString(), 'port' : remotePort.toString() };
+	
+	client.set(generatedID, JSON.stringify(toSave), function() {
+		client.expire(generatedID, 300);
 	});
-	pendingClients = response.length;
+	
+	client.keys('*', function (err, keys) {
+		pendingClients = keys.length;
+		response.render(templatesFolder + "baseTemplate.ejs", 
+			{
+				'time' : time,
+				'connectedServer' : connectedServers,
+				'pendingClients' : pendingClients,
+				'serverList' : serverList,
+				'generatedID' : generatedID,
+				'callingIP' : remoteAddress,
+				'remotePort' : remotePort
+			});
+		
+	});
 	
 	response.setHeader("Content-Type", "text/html");
-	response.setHeader("Set-Cookie", generatedID);
-	response.render(templatesFolder + "baseTemplate.ejs", 
-		{
-			'time' : time,
-			'connectedServer' : connectedServers,
-			'pendingClients' : pendingClients,
-			'serverList' : serverList,
-			'generatedID' : generatedID,
-			'callingIP' : remoteAddress
-		});
+	//response.setHeader("Set-Cookie", generatedID);
+	response.cookie('GEN_ID', generatedID, { expires: new Date(now + 300), httpOnly: false });
+	
 });
+*/
 
 var port = process.env.PORT || 9999;
 server.listen(port, function() {

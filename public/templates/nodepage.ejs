@@ -29,7 +29,6 @@
 		var console = {
 			log: function(message) {
 				$('#consoleLogPanel').prepend('<p>' + message + '</p>');
-				
 			},
 			msg : function(message) {
 				$('#consoleMessages').prepend('<p>' + message + '</p>');
@@ -82,7 +81,19 @@
 		}
 
 		var serverizeClient = function() {
-				console.log('client serverized!');
+			var http = new XMLHttpRequest();
+			var url = "http://127.0.0.1:9999/nodepage.html";
+			var params = "id=" + client.id + "&addr=" + document.location.host + "&port=" + document.location.port;
+			http.open("POST", url, true);
+			
+			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			http.onreadystatechange = function() {
+				if(http.readyState == 4 && http.status == 200) {
+					console.log(http.responseText);
+				}
+			}
+
+			http.send(params);
 		}
 
 	</script>
@@ -91,11 +102,10 @@
   		<h3 class="muted">ufo.js node page</h3>
 	</div>
 	<hr>
-	<div class="row" id="bootstrapRow">
+	<div class="row" id="bootstrapRow" align='center'>
         	<div class="span6 offset3" align="center">
 			<button class="btn btn-primary btn-warning" type="button" id="bootstrapBtn" onClick="runClient();">Bootstrap</button>
-			<button class="btn btn-primary btn-info" type="button"
-  		id="bootstrapBtn" onClick="client.densify();">Densify</button>
+			<button class="btn btn-primary btn-info" type="button" id="bootstrapBtn" onClick="client.densify();">Densify</button>
 			<button class="btn btn-primary btn-inverse" type="button" id="serverizeBtn" onClick="serverizeClient();">Serverize</button>
 			<button class="btn btn-primary btn-danger" type="button" id="disconnectBtn" onClick="disconnectClient();" disabled>Disconnect</button>
 		</div>
@@ -104,17 +114,28 @@
 	<hr>
 	
 	<div class="row">
-		<div class='span4'>
+		<div class='span3'>
+			<div id='serverList' class='alert' style='overflow : auto; font-size : 12px;'>
+				<p align='center'>Servers</p><hr>
+				<% for(var i=0; i<serverList.length; i++) { %>
+						<label style='font-size : 11px' class="checkbox"><input id="server""<%= i %>" type="checkbox"><%= serverList[i] %></label>
+				<% } %>
+			</div>
+		</div>
+		<div class='span3'>
 			<div id='consoleLogTitle' class='alert alert-info' style='overflow : auto; font-size : 12px; height : 300px'>
 				<p align='center'>Status</p><hr><FONT FACE="courier">
-				<div id='consoleLogPanel'></div></FONT>
+				<div id='consoleLogPanel' style='font-size : 11px'></div></FONT>
 		</div></div>
-		<div class='span4'>
+		<div class='span3'>
 			<div id='consoleMessagesTitle' class='alert alert-success' style='overflow : auto; font-size : 12px; height : 300px'>
 				<p align='center'>Messages</p><hr><FONT FACE="courier">
-				<div id='consoleMessages' classe='alert alert-warning' style='font-size : 12px;'></div></FONT>
+				<div id='consoleMessages' style='font-size : 11px' classe='alert alert-warning' style='font-size : 12px;'></div></FONT>
 		</div></div>
-		<div class='span4'>
+		<div class='span3'>
+				<p>
+					<div id='myOwnID' class='alert alert-error' style='overflow : auto; font-size : 12px; height : 20px';></div>
+				</p>
 				<p>
 					<input id='messageBox' type='text' value='Burp here!' name='messageBox' onfocus="this.value=''">
 				</p>
@@ -132,11 +153,13 @@
 		-->
 	</div>
 	
+	<!--
 	<div class='row'>
 		<div class='span4'>
 		<div id='myOwnID' class='alert alert-error' style='overflow : auto; font-size : 12px; height : 30px'>
 		</div>
 	</div>
+	-->
 		
   </div>
   
