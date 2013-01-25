@@ -59,7 +59,7 @@ app.get('/nodepage.html', function(request, response) {
 			keys.forEach(function(key, index, array) {
 				client.get(key, function(err, res) {
 					//console.log('http://' + JSON.parse(res).ip);
-					serverList.push('http://' + JSON.parse(res).ip + ':' + JSON.parse(res).port);
+					serverList.push('ws://' + JSON.parse(res).ip + ':' + JSON.parse(res).port);
 					//serverList.push('http://' + JSON.parse(res).ip);
 					if(index == keys.length -1) {
 						response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
