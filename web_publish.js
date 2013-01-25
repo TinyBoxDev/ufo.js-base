@@ -70,33 +70,39 @@ app.get('/nodepage.html', function(request, response) {
 	});
 });
 
-app.post('/nodepage.html', function(request, response) {
+app.post('/serverize', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
 	response.setHeader("Access-Control-Allow-Origin", "*");
 	
-	// check if every required field is present inside the publish POST request
-	if(request.body.id != null && request.body.addr != null && request.body.port != null) {
-		
-		// check if id is inside redis already
+	console.log(request.connection.remoteAddress);
+	console.log(request.connection.remotePort);
+	
+	if(request.body.id != null) {
 		client.get(request.body.id, function(err, resp) {
 			if(resp) {
 				//console.log('already present!');
 				response.send('Someone with your ID is already under our mind control!');
 			} else {
-				var newEntry = { 'ip' : request.body.addr.toString(), 'port' : request.body.port.toString() };
+				//var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : request.connection.remotePort };
+				var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : 9003 };
 				client.set(request.body.id, JSON.stringify(newEntry), function(err, resp) {
 					client.expire(request.body.id, 300);
 					//console.log('New entry in database: ' + request.body.id + ' on ip ' + newEntry.ip + ' and port ' + newEntry.port);
-					response.send('Good job dude! Your stuff is ' + request.body.id + " " + request.body.addr + " " + request.body.port);
+					response.send('Good job dude! Your stuff is ' + JSON.stringify(newEntry));
 				});
 			}
 		});
-	} else if(request.body.id != null && request.body.isalive != null) {
-		response.send('This is a refresh request, isn\' it?');
 	} else {
 		response.send('No way! Gimme some info about you!');
 	}
 
+});
+
+app.post('/heartbeat', function(request, response) {
+	
+	console.log(request.connection.remoteAddress);
+	console.log(request.connection.remotePort);
+	
 });
 
 app.post('isalive.html', function(request, response) {
