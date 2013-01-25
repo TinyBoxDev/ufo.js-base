@@ -19,7 +19,7 @@ client.on("error", function (err) {
 });
 
 var pagesFolder = __dirname + "/public/";
-var templatesFolder = pagesFolder + "templates/";
+var templatesFolder = __dirname + "/templates/";
 
 // branch v11
 app.use(express.bodyParser());
