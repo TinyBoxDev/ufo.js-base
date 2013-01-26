@@ -48,15 +48,15 @@ app.get('/nodepage.html', function(request, response) {
 	
 	console.log('Nodepage request received.');
 	
-	if(request.cookies.assignedID == undefined) {
-		console.log('Brand new request!');
+	//if(request.cookies.assignedID == undefined) {
+		console.log('Brand new cookie for you!');
 		var assignedID = randomString(16, 'aA#');
 		response.setHeader('Set-Cookie','assignedID=' + assignedID);
-	}es
+		//}
 	
 	var serverList = [];
 	serverList.push('ws://www.ufojs.com');
-	serverList.push('ws://ufojs.dyndns.biz');
+	serverList.push('ws://localhost:8080');
 	
 	client.keys('*', function(err, keys) {
 		if(keys.length == 0) {
@@ -83,17 +83,10 @@ app.post('/serverize', function(request, response) {
 	console.log('Serverize request received.');
 	
 	if(request.cookies.assignedID != undefined) {
-		client.get(request.cookies.assignedID, function(err, resp) {
-			if(resp) {
-				response.send('Someone with your ID is already under our mind control!');
-			} else {
-				//var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : request.connection.remotePort };
-				var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : 9003 };
-				client.set(request.cookies.assignedID, JSON.stringify(newEntry), function(err, resp) {
-					client.expire(request.cookies.assignedID, 300);
-					response.send('Good job dude! Your stuff is ' + JSON.stringify(newEntry));
-				});
-			}
+		var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : 9003 };
+		client.set(request.cookies.assignedID, JSON.stringify(newEntry), function(err, resp) {
+			client.expire(request.cookies.assignedID, 300);
+			response.send('Good job dude! Your stuff is ' + JSON.stringify(newEntry));
 		});
 	} else {
 		response.send('It seems that you don\'t have a cookie. Please retry.');
@@ -112,7 +105,7 @@ app.post('/heartbeat', function(request, response) {
 		var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : 9003 };
 		client.set(request.cookies.assignedID, JSON.stringify(newEntry), function(err, resp) {
 			client.expire(request.cookies.assignedID, 300);
-			response.send('TTL correctly refreshed.');
+			response.send('Long life to you, human.');
 		});
 		
 	} else {

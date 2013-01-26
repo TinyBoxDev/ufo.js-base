@@ -87,10 +87,12 @@
 
 		var serverizeClient = function() {
       var ufoPlugin = document.getElementById('plugin');
+	  ufoPlugin.onmessage = function(msg) { console.log(msg); };
       ufoPlugin.startLocalServer();
 
 			var http = new XMLHttpRequest();
-			var url = "http://www.ufojs.com/serverize";
+			//var url = "http://www.ufojs.com/serverize";
+			var url = "http://" + document.location.host + "/serverize";
 			//var params = "id=" + client.id + "&addr=" + document.location.host + "&port=" + document.location.port;
       var params = "id=" + client.id;
 			http.open("POST", url, true);
@@ -131,6 +133,7 @@
         	<div class="span6 offset3" align="center">
 			<button class="btn btn-primary btn-warning" type="button" id="bootstrapBtn" onClick="runClient();">Bootstrap</button>
 			<button class="btn btn-primary btn-inverse" type="button" id="serverizeBtn" onClick="serverizeClient();">Serverize</button>
+			<button class="btn btn-primary btn-inverse" type="button" id="serverizeBtn" onClick="document.getElementById('plugin').stopLocalServer();">Stop server</button>
 			<button class="btn btn-primary btn-primary" type="button" id="heartbeatBtn" onClick="heartbeatClient();">Heartbeat</button>
 			<button class="btn btn-primary btn-info" type="button" id="bootstrapBtn" onClick="client.densify();">Densify</button>
 			<button class="btn btn-primary btn-danger" type="button" id="disconnectBtn" onClick="disconnectClient();" disabled>Disconnect</button>
