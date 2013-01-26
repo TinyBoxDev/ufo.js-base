@@ -23,6 +23,7 @@ var templatesFolder = __dirname + "/templates/";
 
 // branch v11
 app.use(express.bodyParser());
+app.use(express.cookieParser());
 
 app.configure(function () {
 	// Show Errors Oppan Java Style
@@ -30,11 +31,9 @@ app.configure(function () {
 	
 	// Static Files Folder : hello CSS!
 	app.use(app.router);
-	//app.use(express.static(__dirname + '/public'));
 	app.use(express.static(pagesFolder));
-	//app.use(express.template(templatesFolder));
 	
-	app.use(express.cookieParser());
+	//app.use(express.cookieParser());
 	app.use(express.methodOverride());
 });
 
@@ -45,6 +44,15 @@ app.get('/', function(request, response) {
 
 app.get('/nodepage.html', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
+	//response.setHeader("Access-Control-Allow-Origin", "*");
+	
+	console.log('Nodepage request received.');
+	
+	if(request.cookies.assignedID == undefined) {
+		console.log('Brand new request!');
+		var assignedID = randomString(16, 'aA#');
+		response.setHeader('Set-Cookie','assignedID=' + assignedID);
+	}es
 	
 	var serverList = [];
 	serverList.push('ws://www.ufojs.com');
@@ -58,9 +66,7 @@ app.get('/nodepage.html', function(request, response) {
 		} else {
 			keys.forEach(function(key, index, array) {
 				client.get(key, function(err, res) {
-					//console.log('http://' + JSON.parse(res).ip);
 					serverList.push('ws://' + JSON.parse(res).ip + ':' + JSON.parse(res).port);
-					//serverList.push('http://' + JSON.parse(res).ip);
 					if(index == keys.length -1) {
 						response.render(templatesFolder + "nodepage.ejs", { 'serverList' : serverList });
 					}
@@ -72,53 +78,46 @@ app.get('/nodepage.html', function(request, response) {
 
 app.post('/serverize', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
-	response.setHeader("Access-Control-Allow-Origin", "*");
+	//response.setHeader("Access-Control-Allow-Origin", "*");
 	
-	console.log(request.connection.remoteAddress);
-	console.log(request.connection.remotePort);
+	console.log('Serverize request received.');
 	
-	if(request.body.id != null) {
-		client.get(request.body.id, function(err, resp) {
+	if(request.cookies.assignedID != undefined) {
+		client.get(request.cookies.assignedID, function(err, resp) {
 			if(resp) {
-				//console.log('already present!');
 				response.send('Someone with your ID is already under our mind control!');
 			} else {
 				//var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : request.connection.remotePort };
 				var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : 9003 };
-				client.set(request.body.id, JSON.stringify(newEntry), function(err, resp) {
-					client.expire(request.body.id, 300);
-					//console.log('New entry in database: ' + request.body.id + ' on ip ' + newEntry.ip + ' and port ' + newEntry.port);
+				client.set(request.cookies.assignedID, JSON.stringify(newEntry), function(err, resp) {
+					client.expire(request.cookies.assignedID, 300);
 					response.send('Good job dude! Your stuff is ' + JSON.stringify(newEntry));
 				});
 			}
 		});
 	} else {
-		response.send('No way! Gimme some info about you!');
+		response.send('It seems that you don\'t have a cookie. Please retry.');
 	}
 
 });
 
 app.post('/heartbeat', function(request, response) {
-	
-	console.log(request.connection.remoteAddress);
-	console.log(request.connection.remotePort);
-	
-});
-
-app.post('isalive.html', function(request, response) {
-	console.log('TTL update request received');
 	response.setHeader("Content-Type", "text/html");
-	response.setHeader("Access-Control-Allow-Origin", "*");
+	//response.setHeader("Access-Control-Allow-Origin", "*");
 	
-	if(request.body.id != 'null' && request.body.isalive != 'null') {
-		client.expire(request.body.id, 300, function(err, res) {
-			console.log('TTL for ' + request.body.id + ' correctly updated');
-			response.send('Heartbeat received and TTL updated!');
+	console.log('TTL update request received.');
+	
+	if(request.cookies.assignedID != undefined) {
+		//var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : request.connection.remotePort };
+		var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : 9003 };
+		client.set(request.cookies.assignedID, JSON.stringify(newEntry), function(err, resp) {
+			client.expire(request.cookies.assignedID, 300);
+			response.send('TTL correctly refreshed.');
 		});
+		
 	} else {
-		response.send('Invalid heartbeat!');
+		response.send('Cannot find you inside our powerful mainframe!');
 	}
-	
 });
 
 var port = process.env.PORT || 8080;
