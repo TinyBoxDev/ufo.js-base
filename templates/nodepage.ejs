@@ -23,7 +23,7 @@
   
   <body>
   
-  <object id="plugin" type="application/x-ufojs-mothership" width="0" height="0"> </object>
+  <object id="plugin" type="application/x-ufojs-mothership" width="0" height="0"></object>
   <div class="container">
 
 	<script>
@@ -86,15 +86,16 @@
 		}
 
 		var serverizeClient = function() {
-      var ufoPlugin = document.getElementById('plugin');
-	  ufoPlugin.onmessage = function(msg) { console.log(msg); };
-      ufoPlugin.startLocalServer();
-
+			var ufoPlugin = document.getElementById('plugin');
+			//ufoPlugin.onmessage = function(msg) { console.log(msg); };
+			client.setAsServer(ufoPlugin);
+			ufoPlugin.startLocalServer(9003);
+			
 			var http = new XMLHttpRequest();
 			//var url = "http://www.ufojs.com/serverize";
 			var url = "http://" + document.location.host + "/serverize";
 			//var params = "id=" + client.id + "&addr=" + document.location.host + "&port=" + document.location.port;
-      var params = "id=" + client.id;
+			var params = "id=" + client.id;
 			http.open("POST", url, true);
 			http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
