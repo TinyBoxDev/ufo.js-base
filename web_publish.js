@@ -83,7 +83,7 @@ app.post('/serverize', function(request, response) {
 	console.log('Serverize request received.');
 	
 	if(request.cookies.assignedID != undefined) {
-		var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : 9003 };
+		var newEntry = { 'ip' : request.connection.remoteAddress, 'port' : request.connection.remotePort };
 		client.set(request.cookies.assignedID, JSON.stringify(newEntry), function(err, resp) {
 			client.expire(request.cookies.assignedID, 300);
 			response.send('Good job dude! Your stuff is ' + JSON.stringify(newEntry));
