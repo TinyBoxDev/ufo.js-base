@@ -57,6 +57,7 @@ app.get('/nodepage.html', function(request, response) {
 	var serverList = [];
 	serverList.push('ws://www.ufojs.com');
 	serverList.push('ws://localhost:8080');
+	serverList.push('ws://192.168.1.131');
 	
 	client.keys('*', function(err, keys) {
 		if(keys.length == 0) {
