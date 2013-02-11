@@ -39,28 +39,30 @@
 			}
 		};
 		
+		$(document).ready(function() {
+		      $('#myOwnID').html('<p>' + client.id + '</p>');
+			client.pool.onPoolChanged = function() {
+				var div = $('<div></div>');
+				var printList = function(element, index, array) {
+					div.append('<label class="checkbox"><input id="peer_' + index + '" type="checkbox"> ' + element + '</label><br>');
+				};
+				client.pool.getIds().forEach(printList);
+				//client.pool.getIds().forEach(function(id) { div.append('<input id="' + id + '" type="checkbox">' + id + '<br>'); });
+				$('#peerList').html(div);
+			}
+			console.log('Assigned ID is ' + client.id);
+		});
+		
 		var runClient = function() {
 			console.log('Client is contacting server.');
 			$('#bootstrapBtn').attr('disabled', 'disabled');
 			$('#disconnectBtn').prop('disabled', null);
+			
 			client.onBootstrapPerformed = function() {
-				$('#myOwnID').html('<p>' + client.id + '</p>');
-				
-				client.pool.onPoolChanged = function() {
-					var div = $('<div></div>');
-					var printList = function(element, index, array) {
-						div.append('<label class="checkbox"><input id="peer_' + index + '" type="checkbox"> ' + element + '</label><br>');
-					}
-					;
-					client.pool.getIds().forEach(printList);
-					//client.pool.getIds().forEach(function(id) { div.append('<input id="' + id + '" type="checkbox">' + id + '<br>'); });
-					$('#peerList').html(div);
-				}
-				$('#peerList').html('<div><input id="peer_0" type="checkbox">' + client.pool.getIds()[0] + '<br></div>');
-				console.log('Assigned ID is ' + client.id);
+				//$('#peerList').html('<div><input id="peer_0" type="checkbox">' + client.pool.getIds()[0] + '<br></div>');
 			}
+			
 			client.onDensifyPerformed = function() {
-				
 			}
 			
 			var el = document.getElementById('serverList');
@@ -102,7 +104,7 @@
 			http.onreadystatechange = function() {
 				if(http.readyState == 4 && http.status == 200) {
 					console.log(http.getAllResponseHeaders());
-					//console.log(http.responseText);
+					console.log(http.responseText);
 				}
 			}
 
