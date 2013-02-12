@@ -44,7 +44,7 @@ app.get('/', function(request, response) {
 
 app.get('/nodepage.html', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
-	//response.setHeader("Access-Control-Allow-Origin", "*");
+	response.setHeader("Access-Control-Allow-Origin", "*");
 	
 	console.log('Nodepage request received.');
 	
@@ -79,7 +79,7 @@ app.get('/nodepage.html', function(request, response) {
 
 app.post('/serverize', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
-	//response.setHeader("Access-Control-Allow-Origin", "*");
+	response.setHeader("Access-Control-Allow-Origin", "*");
 	
 	console.log('Serverize request received.');
 	
