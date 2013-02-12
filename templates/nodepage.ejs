@@ -154,14 +154,7 @@
 						<option id="server""<%= i %>"><%= serverList[i] %></option>
 				<% } %>
 			</select>
-			<!--
-			<div id='serverList' class='alert' style='overflow : auto; font-size : 12px;'>
-				<p align='center'>Servers</p><hr>
-				<% for(var i=0; i<serverList.length; i++) { %>
-						<label style='font-size : 11px' class="radio"><input id="server""<%= i %>" type="radio"><%= serverList[i] %></label>
-				<% } %>
-			</div>
-			-->
+			<input id="manualIP" type="text"></input><button class="btn" type="button" onClick="client.bootstrap(document.getElementById("manualIP").value);">Connect</button>
 			
 		</div>
 		<div class='span3'>
