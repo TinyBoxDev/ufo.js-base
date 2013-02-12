@@ -153,15 +153,14 @@
 		
 		var testServer = function() {
 			if(++iter <= 10) {
+				testArray.push(client.pool);
+				client.pool = new connectionPool(1);
 				client.id = 'peer' + String(ids++);
-				var newClient = jQuery.extend(true, {}, client);
-				testArray.push(newClient);
-				//newClient.id = 'peer' + String(ids++);
-				newClient.onBootstrapPerformed = testServer;
-				newClient.bootstrap(document.getElementById("manualIP").value);
+				client.onBootstrapPerformed = testServer;
+				client.bootstrap(document.getElementById("manualIP").value);
 			} else {
 				iter = 0;
-				newClient.onBootstrapPerformed = function(){};
+				client.onBootstrapPerformed = function(){};
 			}
 		}
 
