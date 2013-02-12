@@ -127,6 +127,11 @@
 			
 			http.send(params);
 		}
+		
+		var manualConnect = function() {
+			var manualServer = document.getElementById("manualIP").value;
+			client.bootstrap(manualServer);
+		}
 
 	</script>
 
@@ -151,11 +156,10 @@
 		<div class='span3'>
 			<select id='serverList' class="span3">
 				<% for(var i=0; i<serverList.length; i++) { %>
-						<option id="server""<%= i %>"><%= serverList[i] %></option>
+						<option id="server<%= i %>"><%= serverList[i] %></option>
 				<% } %>
 			</select>
-			<input id="manualIP" type="text"></input><button class="btn" type="button" onClick="client.bootstrap(document.getElementById("manualIP").value);">Connect</button>
-			
+			<input id="manualIP" type="text"></input><button class="btn" type="button" onClick="manualConnect()">Connect</button>
 		</div>
 		<div class='span3'>
 			<div id='consoleLogTitle' class='alert alert-info' style='overflow : auto; font-size : 12px; height : 300px'>
