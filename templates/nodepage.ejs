@@ -27,6 +27,11 @@
   <div class="container">
 
 	<script>
+		
+		var testPeerArray = [];
+		var ids = 1;
+		var iter = 0;
+		
 		var console = {
 			log: function(message) {
 				$('#consoleLogPanel').prepend('<p>' + message + '</p>');
@@ -49,7 +54,7 @@
 				client.pool.getIds().forEach(printList);
 				//client.pool.getIds().forEach(function(id) { div.append('<input id="' + id + '" type="checkbox">' + id + '<br>'); });
 				$('#peerList').html(div);
-			}
+			};
 			console.log('Assigned ID is ' + client.id);
 		});
 		
@@ -132,6 +137,30 @@
 			var manualServer = document.getElementById("manualIP").value;
 			client.bootstrap(manualServer);
 		}
+		
+		var increasePoolSize = function() {
+			client.pool = new connectionPool(9999);
+			client.pool.onPoolChanged = function() {
+				var div = $('<div></div>');
+				var printList = function(element, index, array) {
+					div.append('<label class="checkbox"><input id="peer_' + index + '" type="checkbox"> ' + element + '</label><br>');
+				};
+				client.pool.getIds().forEach(printList);
+				//client.pool.getIds().forEach(function(id) { div.append('<input id="' + id + '" type="checkbox">' + id + '<br>'); });
+				$('#peerList').html(div);
+			};
+		}
+		
+		var testServer = function() {
+			if(++iter < 10) {
+				client.id = String(++ids);
+				client.onBootstrapPerformed = testServer;
+				client.bootstrap(document.getElementById("manualIP").value);
+			} else {
+				iter = 0;
+				client.onBootstrapPerformed = function(){};
+			}
+		}
 
 	</script>
 
@@ -160,6 +189,8 @@
 				<% } %>
 			</select>
 			<input id="manualIP" type="text"></input><button class="btn" type="button" onClick="manualConnect()">Connect</button>
+			<button class="btn" type="button" onClick="testServer()">Test</button>
+			<button class="btn" type="button" onClick="increasePoolSize()">Enlarge your penis</button>
 		</div>
 		<div class='span3'>
 			<div id='consoleLogTitle' class='alert alert-info' style='overflow : auto; font-size : 12px; height : 300px'>
