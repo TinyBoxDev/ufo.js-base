@@ -39,6 +39,7 @@ app.configure(function () {
 
 app.get('/', function(request, response) {
 	response.setHeader("Content-Type", "text/html");
+	response.setHeader("Access-Control-Allow-Origin", "*");
 	response.sendfile(pagesFolder + "index.html");
 });
 
@@ -55,9 +56,9 @@ app.get('/nodepage.html', function(request, response) {
 		//}
 	
 	var serverList = [];
-	serverList.push('ws://www.ufojs.com');
-	serverList.push('ws://localhost:8080');
-	serverList.push('ws://192.168.1.131');
+	//serverList.push('ws://www.ufojs.com');
+	//serverList.push('ws://localhost:8080');
+	serverList.push('ws://172.16.0.18');
 	
 	client.keys('*', function(err, keys) {
 		if(keys.length == 0) {
