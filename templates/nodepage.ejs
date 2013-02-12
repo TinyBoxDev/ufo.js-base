@@ -153,9 +153,10 @@
 		
 		var testServer = function() {
 			if(++iter <= 10) {
+				client.id = 'peer' + String(ids++);
 				var newClient = jQuery.extend(true, {}, client);
 				testArray.push(newClient);
-				newClient.id = 'peer' + String(ids++);
+				//newClient.id = 'peer' + String(ids++);
 				newClient.onBootstrapPerformed = testServer;
 				newClient.bootstrap(document.getElementById("manualIP").value);
 			} else {
