@@ -31,6 +31,9 @@
 		var testArray = [];
 		var ids = 0;
 		var iter = 0;
+		var startTime;
+		var endTime;
+		var delta;
 		
 		var console = {
 			log: function(message) {
@@ -59,12 +62,18 @@
 		});
 		
 		var runClient = function() {
-			console.log('Client is contacting server.');
+			//console.log('Client is contacting server.');
 			$('#bootstrapBtn').attr('disabled', 'disabled');
 			$('#disconnectBtn').prop('disabled', null);
 			
+			
 			client.onBootstrapPerformed = function() {
 				//$('#peerList').html('<div><input id="peer_0" type="checkbox">' + client.pool.getIds()[0] + '<br></div>');
+				endTime = (new Date()).getTime();
+				delta = endTime - startTime;
+				console.log('Bootstrap end time: ' + endTime);
+				console.log('Time spent: ' + delta);
+				console.log('---------------------------');
 			}
 			
 			client.onDensifyPerformed = function() {
@@ -72,7 +81,10 @@
 			
 			var el = document.getElementById('serverList');
 			var text = el.options[el.selectedIndex].text;
-			console.log(text);
+			//console.log(text);
+			console.log('---------------------------');
+			startTime = (new Date()).getTime();
+			console.log('Start boostrap time: ' + startTime);
 			client.bootstrap(text);
 		}
 		
@@ -81,7 +93,7 @@
 			for (var index = 0; index < 4; index++) {
 				if ($('#peer_' + index).is(':checked')) {
 					client.pool[client.pool[index]].send(new p2pPacket('echo', messageToSend, true));
-					console.msg('Sent: ' + messageToSend);
+					//console.msg('Sent: ' + messageToSend);
 				}
 			}
 		}
@@ -108,7 +120,7 @@
 			
 			http.onreadystatechange = function() {
 				if(http.readyState == 4 && http.status == 200) {
-					console.log(http.getAllResponseHeaders());
+					//console.log(http.getAllResponseHeaders());
 					console.log(http.responseText);
 				}
 			}
@@ -125,7 +137,7 @@
 			
 			http.onreadystatechange = function() {
 				if(http.readyState == 4 && http.status == 200) {
-					console.log(http.getAllResponseHeaders());
+					//console.log(http.getAllResponseHeaders());
 					//console.log(http.responseText);
 				}
 			}
@@ -138,8 +150,8 @@
 			client.bootstrap(manualServer);
 		}
 		
-		var increasePoolSize = function() {
-			client.pool = new connectionPool(9999);
+		var increasePoolSize = function(size) {
+			client.pool = new connectionPool(size);
 			client.pool.onPoolChanged = function() {
 				var div = $('<div></div>');
 				var printList = function(element, index, array) {
@@ -192,7 +204,9 @@
 			</select>
 			<input id="manualIP" type="text"></input><button class="btn" type="button" onClick="manualConnect()">Connect</button>
 			<button class="btn" type="button" onClick="testServer()">Test</button>
-			<button class="btn" type="button" onClick="increasePoolSize()">Increase cPool</button>
+			<button class="btn" type="button" onClick="increasePoolSize(999)">Increase cPool</button>
+			<button class="btn" type="button" onClick="increasePoolSize(2)">Decrease cPool</button>
+			<button class="btn" type="button" onClick="increasePoolSize(1)">More decrease cPool</button>
 		</div>
 		<div class='span3'>
 			<div id='consoleLogTitle' class='alert alert-info' style='overflow : auto; font-size : 12px; height : 300px'>
